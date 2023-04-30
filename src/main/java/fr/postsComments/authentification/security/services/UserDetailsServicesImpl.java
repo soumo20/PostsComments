@@ -1,7 +1,7 @@
-package fr.postsComments.jwtSecurity.security.services;
+package fr.postsComments.authentification.security.services;
 
-import fr.postsComments.jwtSecurity.models.UserApp;
-import fr.postsComments.jwtSecurity.repository.UserRepo;
+import fr.postsComments.authentification.models.UserApp;
+import fr.postsComments.authentification.repository.UserRepo;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

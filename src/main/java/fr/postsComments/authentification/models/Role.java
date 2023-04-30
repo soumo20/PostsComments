@@ -1,7 +1,6 @@
-package fr.postsComments.jwtSecurity.models;
+package fr.postsComments.authentification.models;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,6 +19,6 @@ public class Role {
     @Column(name = "id_role")
     private Long id;
 
-    @NotBlank(message = "The role name must nor be blank")
+    @Enumerated(EnumType.STRING)
     private ERole nameRole;
 }

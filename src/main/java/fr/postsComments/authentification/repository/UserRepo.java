@@ -1,6 +1,6 @@
-package fr.postsComments.jwtSecurity.repository;
+package fr.postsComments.authentification.repository;
 
-import fr.postsComments.jwtSecurity.models.UserApp;
+import fr.postsComments.authentification.models.UserApp;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -14,4 +14,5 @@ public interface UserRepo extends JpaRepository<UserApp, Long> {
     Boolean existByEmail(@Param("email") String email);
 
 
+    boolean existsByEmail(String email);
 }

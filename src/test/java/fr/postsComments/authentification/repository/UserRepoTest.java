@@ -1,7 +1,6 @@
-package fr.postsComments.jwtSecurity.repository;
+package fr.postsComments.authentification.repository;
 
-import fr.postsComments.jwtSecurity.models.UserApp;
-import org.junit.jupiter.api.Disabled;
+import fr.postsComments.authentification.models.UserApp;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -24,7 +23,7 @@ class UserRepoTest {
         void existByEmailTrue() {
             //Given
             String email = "existByEmail@gmail.com";
-            UserApp user = UserApp.builder().userName("existByEmailTrue").email(email).passeword("0000").phone("0606060606").build();
+            UserApp user = UserApp.builder().email(email).passeword("0000").phone("0606060606").build();
             userRepo.save(user);
 
             //When

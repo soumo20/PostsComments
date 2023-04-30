@@ -1,7 +1,7 @@
-package fr.postsComments.jwtSecurity.security.services;
+package fr.postsComments.authentification.security.services;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import fr.postsComments.jwtSecurity.models.UserApp;
+import fr.postsComments.authentification.models.UserApp;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,35 +9,31 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 public class UserDetailsImpl implements UserDetails {
     private Long id;
 
-    private String username;
     private String email;
 
     @JsonIgnore
     private String password;
     private Collection<? extends GrantedAuthority> authorities;
 
-    public UserDetailsImpl(Long id, String username, String email, String password,
+    public UserDetailsImpl(Long id, String email, String password,
                            Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
-        this.username = username;
         this.email = email;
         this.password = password;
         this.authorities = authorities;
     }
 
     public static UserDetailsImpl build(UserApp user) {
-        List<GrantedAuthority> authorities = user.getRoles().stream()
+        List<SimpleGrantedAuthority> authorities = user.getRoles().stream()
                 .map(role -> new SimpleGrantedAuthority(role.getNameRole().name()))
-                .collect(Collectors.toList());
+                .toList();
 
         return new UserDetailsImpl(
                 user.getId(),
-                user.getUserName(),
                 user.getEmail(),
                 user.getPasseword(),
                 authorities);
@@ -55,7 +51,12 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public String getUsername() {
-        return username;
+        return this.getEmail();
+    }
+
+
+    public String getEmail() {
+        return email;
     }
 
     @Override
@@ -86,5 +87,9 @@ public class UserDetailsImpl implements UserDetails {
             return false;
         UserDetailsImpl user = (UserDetailsImpl) o;
         return Objects.equals(id, user.id);
+    }
+
+    public Long getId() {
+        return id;
     }
 }
