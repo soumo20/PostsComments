@@ -23,12 +23,12 @@ public class PostController {
 
     @GetMapping("")
     public ResponseEntity<List<Post>> getPosts() {
-        return new ResponseEntity<>(postServices.findAll(), HttpStatus.OK);
+        return new ResponseEntity<>(postServices.findAllPosts(), HttpStatus.OK);
     }
 
     @GetMapping("/id/{id}")
     public ResponseEntity<Post> getPostsById(@PathVariable() Long id) {
-        return new ResponseEntity<>(postServices.findOneById(id), HttpStatus.OK);
+        return new ResponseEntity<>(postServices.findPostById(id), HttpStatus.OK);
     }
 
     @PostMapping("/createPost")
@@ -43,7 +43,7 @@ public class PostController {
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deletePost(@PathVariable() Long id) {
-        postServices.delete(id);
+        postServices.deletePost(id);
         return ResponseEntity.noContent().build();
     }
 }

@@ -22,6 +22,7 @@ public class Post {
     private String title;
 
     @NotBlank(message = "The type must not be blanck")
+    @Column(name = "content_post")
     private String contente;
 
     @ManyToOne

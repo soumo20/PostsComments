@@ -9,11 +9,11 @@ public interface IPostServices {
 
     Post addPost(Post post);
 
-    List<Post> findAll();
+    List<Post> findAllPosts();
 
-    Post findOneById(Long id);
+    Post findPostById(Long id);
 
-    void delete(Long id);
+    void deletePost(Long id);
 
     Post updatePost(Post post);
 
