@@ -7,7 +7,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.Optional;
 
-public interface UserRepo extends JpaRepository<UserApp, Long> {
+public interface IUserRepository extends JpaRepository<UserApp, Long> {
     Optional<UserApp> findByEmail(String email);
 
     @Query("SELECT CASE WHEN COUNT(u) > 0 THEN true ELSE false END FROM UserApp u WHERE u.email = :email")

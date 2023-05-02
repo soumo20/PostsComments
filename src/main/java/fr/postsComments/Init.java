@@ -2,7 +2,7 @@ package fr.postsComments;
 
 import fr.postsComments.authentification.models.ERole;
 import fr.postsComments.authentification.models.Role;
-import fr.postsComments.authentification.repository.RoleRepo;
+import fr.postsComments.authentification.repository.IRoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 public class Init implements CommandLineRunner {
 
     @Autowired
-    RoleRepo roleRepo;
+    IRoleRepository roleRepo;
 
     @Override
     public void run(String... args) throws Exception {
