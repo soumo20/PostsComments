@@ -22,12 +22,12 @@ public class PostServicesImpl implements IPostServices {
     }
 
     @Override
-    public List<Post> findAll() {
+    public List<Post> findAllPosts() {
         return postsRepository.findAll();
     }
 
     @Override
-    public Post findOneById(Long id) {
+    public Post findPostById(Long id) {
         if (id == null) {
             throw new IllegalArgumentException("The id is null");
         }
@@ -35,7 +35,7 @@ public class PostServicesImpl implements IPostServices {
     }
 
     @Override
-    public void delete(Long id) {
+    public void deletePost(Long id) {
         if (id == null) {
             throw new IllegalArgumentException("The id is null");
         }

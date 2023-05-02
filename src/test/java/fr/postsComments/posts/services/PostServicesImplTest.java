@@ -67,7 +67,7 @@ class PostServicesImplTest {
     void findAllCallTheRightMethodFromRepository() {
 
         //When
-        List<Post> listPostsFounded = postServices.findAll();
+        List<Post> listPostsFounded = postServices.findAllPosts();
 
         //Then
         verify(postRepository).findAll();
@@ -75,7 +75,7 @@ class PostServicesImplTest {
 
     @Test
     void findPostByIdNullThrowException() {
-        assertThatThrownBy(() -> postServices.findOneById(postToSave1.getId()))
+        assertThatThrownBy(() -> postServices.findPostById(postToSave1.getId()))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("The id is null");
         verify(postRepository, never()).findById(any());
@@ -83,7 +83,7 @@ class PostServicesImplTest {
 
     @Test
     void findByIdThrowEntityNotFournd() {
-        assertThatThrownBy(() -> postServices.findOneById(postWithId.getId()))
+        assertThatThrownBy(() -> postServices.findPostById(postWithId.getId()))
                 .isInstanceOf(EntityNotFoundException.class)
                 .hasMessage("Post not found with the given id " + postWithId.getId());
     }
