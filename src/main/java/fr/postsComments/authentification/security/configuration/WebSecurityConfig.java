@@ -58,7 +58,7 @@ public class WebSecurityConfig {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 //Donner les autorisatio pour acceder aux ressources
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers("/api/auth/**" , "/api/v1/**").permitAll()
                 );
         /*is a component in Spring Security that is responsible for authenticating users.
         It does this by implementing the AuthenticationProvider interface and providing

@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class UserRepoTest {
 
     @Autowired
-    private UserRepo userRepo;
+    private IUserRepository IUserRepository;
 
 
     @Nested
@@ -24,10 +24,10 @@ class UserRepoTest {
             //Given
             String email = "existByEmail@gmail.com";
             UserApp user = UserApp.builder().email(email).passeword("0000").phone("0606060606").build();
-            userRepo.save(user);
+            IUserRepository.save(user);
 
             //When
-            Boolean existByEmail = userRepo.existByEmail(email);
+            Boolean existByEmail = IUserRepository.existByEmail(email);
 
             //Then
             assertTrue(existByEmail);
@@ -39,7 +39,7 @@ class UserRepoTest {
             String email = "donExistByEmail@gmail.com";
 
             //When
-            Boolean existByEmail = userRepo.existByEmail(email);
+            Boolean existByEmail = IUserRepository.existByEmail(email);
 
             //Then
             assertFalse(existByEmail);

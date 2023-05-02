@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class LoginUserServiceImpl implements LoginUserService {
+public class LoginUserServiceImpl implements ILoginUserService {
 
     private final JwtUtils jwtUtils;
     private final AuthenticationManager authenticationManager;
