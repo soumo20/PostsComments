@@ -4,7 +4,6 @@ package fr.postscomments.authentification.security.configuration;
 import fr.postscomments.authentification.security.jwt.AuthEntryPointJwt;
 import fr.postscomments.authentification.security.jwt.AuthTokenFilter;
 import fr.postscomments.authentification.security.services.UserDetailsServicesImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,11 +18,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 public class WebSecurityConfig {
-    @Autowired
-    UserDetailsServicesImpl userDetailsService;
-
-    @Autowired
-    private AuthEntryPointJwt unauthorizedHandler;
 
     @Bean
     public AuthTokenFilter authenticationJwtTokenFilter() {
@@ -41,7 +35,7 @@ public class WebSecurityConfig {
     }
 
     @Bean
-    public DaoAuthenticationProvider authenticationProvider() {
+    public DaoAuthenticationProvider authenticationProvider(UserDetailsServicesImpl userDetailsService) {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
 
         authProvider.setUserDetailsService(userDetailsService);
@@ -50,7 +44,7 @@ public class WebSecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http, AuthEntryPointJwt unauthorizedHandler,UserDetailsServicesImpl userDetailsService) throws Exception {
         http
                 .cors().and().csrf().disable()
                 //If there is any exception it will be handler by entryPoint and don't create session for user
@@ -64,7 +58,7 @@ public class WebSecurityConfig {
         /*is a component in Spring Security that is responsible for authenticating users.
         It does this by implementing the AuthenticationProvider interface and providing
         a method to authenticate a user given an Authentication object*/
-        http.authenticationProvider(authenticationProvider());
+        http.authenticationProvider(authenticationProvider(userDetailsService));
 
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 

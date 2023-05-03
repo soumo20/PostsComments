@@ -1,4 +1,4 @@
-package fr.postscomments.Shared;
+package fr.postscomments.shared;
 
 import lombok.NoArgsConstructor;
 

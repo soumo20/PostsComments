@@ -11,16 +11,16 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class UserDetailsServicesImpl implements UserDetailsService {
 
-    private final IUserRepository IUserRepository;
+    private final IUserRepository userRepository;
 
-    public UserDetailsServicesImpl(IUserRepository IUserRepository) {
-        this.IUserRepository = IUserRepository;
+    public UserDetailsServicesImpl(IUserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        UserApp user = IUserRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User not found with the given email " + email));
+        UserApp user = userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User not found with the given email " + email));
         return UserDetailsImpl.build(user);
     }
 }

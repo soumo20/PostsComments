@@ -11,17 +11,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("api/auth")
 public class RegisterController {
-    private final IRegisterUserService IRegisterUserService;
+    private final IRegisterUserService registerUserService;
 
-    public RegisterController(IRegisterUserService IRegisterUserService) {
-        this.IRegisterUserService = IRegisterUserService;
+    public RegisterController(IRegisterUserService registerUserService) {
+        this.registerUserService = registerUserService;
     }
 
 
     @PostMapping("/signup")
     public ResponseEntity<MessageResponse> registerUser(@Valid @RequestBody SignUpRequest signUpRequest) {
 
-        IRegisterUserService.register(signUpRequest);
+        registerUserService.register(signUpRequest);
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }
 }

@@ -1,7 +1,7 @@
-package fr.postscomments.Shared.handler;
+package fr.postscomments.shared.handler;
 
-import fr.postscomments.Shared.EntityNotFoundException;
-import fr.postscomments.Shared.ErrorMessage;
+import fr.postscomments.shared.EntityNotFoundException;
+import fr.postscomments.shared.ErrorMessage;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;

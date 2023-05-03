@@ -1,6 +1,6 @@
 package fr.postscomments.comments.services;
 
-import fr.postscomments.Shared.EntityNotFoundException;
+import fr.postscomments.shared.EntityNotFoundException;
 import fr.postscomments.comments.models.Comment;
 import fr.postscomments.comments.repository.ICommentRepository;
 import org.springframework.stereotype.Service;

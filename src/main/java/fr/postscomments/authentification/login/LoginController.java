@@ -11,16 +11,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("api/auth")
 public class LoginController {
 
-    private final ILoginUserService ILoginUserService;
+    private final ILoginUserService loginUserService;
 
-    public LoginController(ILoginUserService ILoginUserService) {
-        this.ILoginUserService = ILoginUserService;
+    public LoginController(ILoginUserService loginUserService) {
+        this.loginUserService = loginUserService;
     }
 
 
     @PostMapping("/login")
     public ResponseEntity<JwtResponse> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
-        return ResponseEntity.ok(ILoginUserService.login(loginRequest));
+        return ResponseEntity.ok(loginUserService.login(loginRequest));
     }
 
 }

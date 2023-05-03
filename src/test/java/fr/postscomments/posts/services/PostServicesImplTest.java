@@ -1,6 +1,6 @@
 package fr.postscomments.posts.services;
 
-import fr.postscomments.Shared.EntityNotFoundException;
+import fr.postscomments.shared.EntityNotFoundException;
 import fr.postscomments.posts.models.Post;
 import fr.postscomments.posts.repository.IPostRepository;
 import org.junit.jupiter.api.Test;

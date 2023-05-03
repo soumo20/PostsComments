@@ -9,7 +9,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class LoginUserServiceImpl implements ILoginUserService {
@@ -32,7 +31,8 @@ public class LoginUserServiceImpl implements ILoginUserService {
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
         List<String> roles = userDetails.getAuthorities().stream()
                 .map(item -> item.getAuthority())
-                .collect(Collectors.toList());
+                .toList();
+
         return new JwtResponse(jwt,
                 userDetails.getId(),
                 userDetails.getUsername(),
