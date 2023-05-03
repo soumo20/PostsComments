@@ -19,19 +19,19 @@ public class CommentController {
         this.commentServices = commentServices;
     }
 
-    @GetMapping("")
-    public ResponseEntity<List<Comment>> getPosts() {
-        return new ResponseEntity<>(commentServices.findAllComment(), HttpStatus.OK);
+    @GetMapping("/post/{id}")
+    public ResponseEntity<List<Comment>> getCommentsOfSpecPost(@PathVariable() Long idPost) {
+        return new ResponseEntity<>(commentServices.findAllCommentsOfOnePost(idPost), HttpStatus.FOUND);
     }
 
     @GetMapping("/id/{id}")
-    public ResponseEntity<Comment> getPostsById(@PathVariable() Long id) {
+    public ResponseEntity<Comment> getCommentById(@PathVariable() Long id) {
         return new ResponseEntity<>(commentServices.findCommentById(id), HttpStatus.OK);
     }
 
-    @PostMapping("/addComment")
-    public ResponseEntity<Comment> createPost(@Valid @RequestBody Comment commentToAdd) {
-        return new ResponseEntity<>(commentServices.addComment(commentToAdd), HttpStatus.CREATED);
+    @PostMapping("/addComment/{id}")
+    public ResponseEntity<Comment> addCommentToPost(@Valid @RequestBody Comment commentToAdd, @PathVariable Long idPost) {
+        return new ResponseEntity<>(commentServices.addComment(commentToAdd, idPost), HttpStatus.CREATED);
     }
 
     @PutMapping("/updateComment")

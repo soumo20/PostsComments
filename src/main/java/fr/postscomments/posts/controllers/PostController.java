@@ -28,7 +28,7 @@ public class PostController {
 
     @GetMapping("/id/{id}")
     public ResponseEntity<Post> getPostsById(@PathVariable() Long id) {
-        return new ResponseEntity<>(postServices.findPostById(id), HttpStatus.OK);
+        return new ResponseEntity<>(postServices.findPostById(id), HttpStatus.FOUND);
     }
 
     @PostMapping("/createPost")

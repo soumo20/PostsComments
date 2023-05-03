@@ -79,8 +79,6 @@ class PostServicesImplTest {
 
     @Test
     void findPostByIdNullThrowException() {
-
-
         assertThatThrownBy(() -> postServices.findPostById(postToSave1.getId()))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("The id is null");

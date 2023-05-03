@@ -9,10 +9,12 @@ public interface ICommentServices {
 
     Comment findCommentById(Long id);
 
-    Comment addComment(Comment commentToAdd);
+    Comment addComment(Comment commentToAdd, Long idPost);
 
     Comment updateComment(Comment commentUpdated);
 
     void deleteComment(Long id);
+
+    List<Comment> findAllCommentsOfOnePost(Long idPost);
 
 }
