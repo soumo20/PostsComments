@@ -20,10 +20,6 @@ public class CommentServicesImpl implements ICommentServices {
         this.postRepository = postRepository;
     }
 
-    @Override
-    public List<Comment> findAllComment() {
-        return commentRepository.findAll();
-    }
 
     @Override
     public Comment findCommentById(Long id) {

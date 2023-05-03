@@ -29,23 +29,23 @@ class PostServicesImplTest {
     Post postToSave1 = Post.builder()
             .title("3 Tips for Staying Focused While Working From Home")
             .contente("""
-                    1.Establish a routine: Having a set routine can help you create structure in your day and keep 
+                    1.Establish a routine: Having a set routine can help you create structure in your day and keep
                     you on track.
                     2. Create a designated workspace:Set up a space that is solely dedicated to work.
-                    3.Minimize distractions:Identify what distracts you and eliminate as many of those distractions 
+                    3.Minimize distractions:Identify what distracts you and eliminate as many of those distractions
                     as possible.""")
             .build();
     Post postToSave2 = Post.builder()
             .title("3 Tips for Staying Focused While Working From DESK")
             .contente("""
-                    1.Establish a routine: Having a set routine can help you create structure in your day and keep 
+                    1.Establish a routine: Having a set routine can help you create structure in your day and keep
                     you on track.
                     """)
             .build();
     Post postWithId = Post.builder().id(1L)
             .title("3 Tips for Staying Focused While Working From DESK")
             .contente("""
-                    1.Establish a routine: Having a set routine can help you create structure in your day and keep 
+                    1.Establish a routine: Having a set routine can help you create structure in your day and keep
                     you on track.
                     """)
             .build();
