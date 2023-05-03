@@ -1,5 +1,6 @@
 package fr.postscomments.comments.controllers;
 
+import fr.postscomments.comments.dto.CommentDto;
 import fr.postscomments.comments.models.Comment;
 import fr.postscomments.comments.services.ICommentServices;
 import jakarta.validation.Valid;
@@ -30,8 +31,9 @@ public class CommentController {
     }
 
     @PostMapping("/addComment/{id}")
-    public ResponseEntity<Comment> addCommentToPost(@Valid @RequestBody Comment commentToAdd, @PathVariable Long idPost) {
-        return new ResponseEntity<>(commentServices.addComment(commentToAdd, idPost), HttpStatus.CREATED);
+    public ResponseEntity<Comment> addCommentToPost(@Valid @RequestBody CommentDto comment, @PathVariable Long id) {
+        System.out.println(id);
+        return new ResponseEntity<>(commentServices.addComment(comment, id), HttpStatus.CREATED);
     }
 
     @PutMapping("/updateComment")

@@ -37,7 +37,7 @@ public class Init implements CommandLineRunner {
         role2.setNameRole(ERole.ROLE_ADMIN);
         UserApp userApp = new UserApp();
         userApp.setEmail("camille@gmail.com");
-        userApp.setPasseword(encoder.encode(env.getProperty("USER_PASSEWORD")));
+        userApp.setPasseword(encoder.encode("azerty"));
         userApp.setPhone("0672142332");
         userApp.setRoles(Set.of(role1));
 

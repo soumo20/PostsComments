@@ -10,7 +10,7 @@ import java.util.Set;
 
 @Data
 @Entity
-@Table(name = "user-app")
+@Table(name = "user_app")
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -28,7 +28,7 @@ public class UserApp {
     private String phone;
 
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "user-roles",
+    @JoinTable(name = "user_roles",
             joinColumns = @JoinColumn(name = "id_user"),
             inverseJoinColumns = @JoinColumn(name = "id_role"))
     private Set<Role> roles;
