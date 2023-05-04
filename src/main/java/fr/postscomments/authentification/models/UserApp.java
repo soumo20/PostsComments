@@ -1,5 +1,6 @@
 package fr.postscomments.authentification.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,6 +24,7 @@ public class UserApp {
 
     private String email;
 
+    @JsonIgnore
     private String passeword;
 
     private String phone;
