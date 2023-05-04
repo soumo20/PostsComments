@@ -20,9 +20,9 @@ public class Comment {
     @Column(name = "id_comment")
     private Long id;
 
-    @Column(name = "Contente_comment")
+    @Column(name = "Content_comment")
     @NotBlank(message = "The comment must not be blanck")
-    private String contente;
+    private String content;
 
     @ManyToOne
     @JoinColumn(name = "id_user")

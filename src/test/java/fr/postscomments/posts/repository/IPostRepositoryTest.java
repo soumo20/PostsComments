@@ -27,7 +27,7 @@ class IPostRepositoryTest {
     public void setUp() {
         Post post1 = Post.builder()
                 .title("Post 1")
-                .contente("This is the content of Post 1")
+                .content("This is the content of Post 1")
                 .build();
         postSaved1 = postServices.addPost(post1);
     }

@@ -36,7 +36,7 @@ class ICommentRepositoryTest {
         // create and save some posts
         Post post1 = Post.builder()
                 .title("Post 1")
-                .contente("This is the content of Post 1")
+                .content("This is the content of Post 1")
                 .build();
        postSaved1 = postServices.addPost(post1);
     }
@@ -46,17 +46,17 @@ class ICommentRepositoryTest {
     void findAllCommentsOfOnePost() {
         //Given
         Comment comment1 = Comment.builder()
-                .contente("This is a comment on Post 1")
+                .content("This is a comment on Post 1")
                 .post(postSaved1)
                 .build();
 
         Comment comment2 = Comment.builder()
-                .contente("This is another comment on Post 1")
+                .content("This is another comment on Post 1")
                 .post(postSaved1)
                 .build();
 
         Comment comment3 = Comment.builder()
-                .contente("This is a comment on Post 2")
+                .content("This is a comment on Post 2")
                 .post(postSaved1)
                 .build();
 

@@ -45,7 +45,7 @@ public class CommentServicesImpl implements ICommentServices {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
         UserApp user = userRepository.findById(userDetails.getId()).orElseThrow(() -> new EntityNotFoundException("No user"));
-        Comment comment = Comment.builder().contente(commentToAdd.getContent()).post(post).author(user).build();
+        Comment comment = Comment.builder().content(commentToAdd.getContent()).post(post).author(user).build();
 
         return commentRepository.save(comment);
     }

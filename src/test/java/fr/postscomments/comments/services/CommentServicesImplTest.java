@@ -36,14 +36,14 @@ class CommentServicesImplTest {
 
     private static final Post POST_SAVED = Post.builder().id(1L)
             .title("3 Tips for Staying Focused While Working From DESK")
-            .contente("""
+            .content("""
                     1.Establish a routine: Having a set routine can help you create structure in your day and keep
                     you on track.
                     """)
             .build();
 
     private static final Comment COMMENT_TO_ADD1 = Comment.builder()
-            .contente("This is a first comment")
+            .content("This is a first comment")
             .post(POST_SAVED)
             .build();
     @Nested
