@@ -25,7 +25,7 @@ public class PdfGenerator {
         Font fontTiltle = FontFactory.getFont(FontFactory.TIMES_ROMAN);
         fontTiltle.setSize(20);
         Font fontParagraph = FontFactory.getFont(FontFactory.TIMES_ROMAN);
-        fontParagraph.setSize(20);
+        fontParagraph.setSize(14);
         // Creating paragraph
         Paragraph paragraph1 = new Paragraph(post.getTitle(), fontTiltle);
         // Aligning the paragraph in the document
