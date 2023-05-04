@@ -3,6 +3,7 @@ package fr.postscomments.comments.services;
 import fr.postscomments.authentification.models.UserApp;
 import fr.postscomments.authentification.repository.IUserRepository;
 import fr.postscomments.authentification.security.services.UserDetailsImpl;
+import fr.postscomments.authentification.security.services.UserServices;
 import fr.postscomments.comments.dto.CommentDto;
 import fr.postscomments.comments.models.Comment;
 import fr.postscomments.comments.repository.ICommentRepository;
@@ -24,10 +25,13 @@ public class CommentServicesImpl implements ICommentServices {
 
     private final IUserRepository userRepository;
 
-    public CommentServicesImpl(ICommentRepository commentRepository, IPostRepository postRepository, IUserRepository userRepository) {
+    private final UserServices userServices;
+
+    public CommentServicesImpl(ICommentRepository commentRepository, IPostRepository postRepository, IUserRepository userRepository, UserServices userServices) {
         this.commentRepository = commentRepository;
         this.postRepository = postRepository;
         this.userRepository = userRepository;
+        this.userServices = userServices;
     }
 
 
@@ -42,9 +46,7 @@ public class CommentServicesImpl implements ICommentServices {
     @Override
     public Comment addComment(CommentDto commentToAdd, Long idPost) {
         Post post = postRepository.findById(idPost).orElseThrow(() -> new EntityNotFoundException("No post founded with the given id " + idPost));
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-        UserApp user = userRepository.findById(userDetails.getId()).orElseThrow(() -> new EntityNotFoundException("No user"));
+        UserApp user = userServices.findUserConnected();
         Comment comment = Comment.builder().content(commentToAdd.getContent()).post(post).author(user).build();
 
         return commentRepository.save(comment);
