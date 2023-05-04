@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("api/auth")
 public class RegisterController {
-    private final IRegisterUserService registerUserService;
+    private final RegisterUserService registerUserService;
 
-    public RegisterController(IRegisterUserService registerUserService) {
+    public RegisterController(RegisterUserService registerUserService) {
         this.registerUserService = registerUserService;
     }
 

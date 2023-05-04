@@ -13,7 +13,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class UserRepoTest {
 
     @Autowired
-    private IUserRepository userRepository;
+    private UserRepository userRepository;
+
 
 
     @Nested

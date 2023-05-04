@@ -1,6 +1,6 @@
 package fr.postscomments.authentification.register;
 
-public interface IRegisterUserService {
+public interface RegisterUserService {
 
     void register(SignUpRequest signUpRequest);
 }

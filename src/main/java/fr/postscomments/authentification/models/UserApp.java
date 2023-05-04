@@ -10,7 +10,7 @@ import java.util.Set;
 
 @Data
 @Entity
-@Table(name = "user-app")
+@Table(name = "user_app")
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder

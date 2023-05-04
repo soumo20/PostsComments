@@ -1,7 +1,8 @@
 package fr.postscomments.posts.controllers;
 
+import fr.postscomments.posts.dto.PostDto;
 import fr.postscomments.posts.models.Post;
-import fr.postscomments.posts.services.IPostServices;
+import fr.postscomments.posts.services.PostServices;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,10 +14,10 @@ import java.util.List;
 @RequestMapping("/api/v1/posts")
 public class PostController {
 
-    private final IPostServices postServices;
+    private final PostServices postServices;
 
 
-    public PostController(IPostServices postServices) {
+    public PostController(PostServices postServices) {
         this.postServices = postServices;
     }
 
@@ -28,12 +29,12 @@ public class PostController {
 
     @GetMapping("/id/{id}")
     public ResponseEntity<Post> getPostsById(@PathVariable() Long id) {
-        return new ResponseEntity<>(postServices.findPostById(id), HttpStatus.OK);
+        return new ResponseEntity<>(postServices.findPostById(id), HttpStatus.FOUND);
     }
 
     @PostMapping("/createPost")
-    public ResponseEntity<Post> createPost(@Valid @RequestBody Post postToCreate) {
-        return new ResponseEntity<>(postServices.addPost(postToCreate), HttpStatus.CREATED);
+    public ResponseEntity<Post> createPost(@Valid @RequestBody PostDto postDto) {
+        return new ResponseEntity<>(postServices.addPost(postDto), HttpStatus.CREATED);
     }
 
     @PutMapping("/updatePost")

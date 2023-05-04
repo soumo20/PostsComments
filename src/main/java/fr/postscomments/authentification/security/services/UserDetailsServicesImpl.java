@@ -1,7 +1,7 @@
 package fr.postscomments.authentification.security.services;
 
 import fr.postscomments.authentification.models.UserApp;
-import fr.postscomments.authentification.repository.IUserRepository;
+import fr.postscomments.authentification.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -11,9 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class UserDetailsServicesImpl implements UserDetailsService {
 
-    private final IUserRepository userRepository;
+    private final UserRepository userRepository;
 
-    public UserDetailsServicesImpl(IUserRepository userRepository) {
+    public UserDetailsServicesImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 

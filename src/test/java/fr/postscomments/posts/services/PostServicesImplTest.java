@@ -1,8 +1,11 @@
 package fr.postscomments.posts.services;
 
+import fr.postscomments.authentification.models.UserApp;
+import fr.postscomments.authentification.security.services.UserServices;
+import fr.postscomments.posts.dto.PostDto;
 import fr.postscomments.shared.EntityNotFoundException;
 import fr.postscomments.posts.models.Post;
-import fr.postscomments.posts.repository.IPostRepository;
+import fr.postscomments.posts.repository.PostRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -24,50 +27,65 @@ class PostServicesImplTest {
     private PostServicesImpl postServices;
 
     @Mock
-    private IPostRepository postRepository;
+    private PostRepository postRepository;
 
-    Post postToSave1 = Post.builder()
+    @Mock
+    private UserServices userServices;
+
+    PostDto postToSave1 = PostDto.builder()
             .title("3 Tips for Staying Focused While Working From Home")
-            .contente("""
-                    1.Establish a routine: Having a set routine can help you create structure in your day and keep 
+            .content("""
+                    1.Establish a routine: Having a set routine can help you create structure in your day and keep
                     you on track.
                     2. Create a designated workspace:Set up a space that is solely dedicated to work.
-                    3.Minimize distractions:Identify what distracts you and eliminate as many of those distractions 
+                    3.Minimize distractions:Identify what distracts you and eliminate as many of those distractions
                     as possible.""")
             .build();
     Post postToSave2 = Post.builder()
             .title("3 Tips for Staying Focused While Working From DESK")
-            .contente("""
-                    1.Establish a routine: Having a set routine can help you create structure in your day and keep 
+            .content("""
+                    1.Establish a routine: Having a set routine can help you create structure in your day and keep
                     you on track.
                     """)
             .build();
     Post postWithId = Post.builder().id(1L)
             .title("3 Tips for Staying Focused While Working From DESK")
-            .contente("""
-                    1.Establish a routine: Having a set routine can help you create structure in your day and keep 
+            .content("""
+                    1.Establish a routine: Having a set routine can help you create structure in your day and keep
                     you on track.
                     """)
             .build();
 
     @Test
     void savePostWithSuccess() {
+        // Mock the userServices.findUserConnected() method
+        UserApp user = new UserApp();
+        when(userServices.findUserConnected()).thenReturn(user);
 
         //When
-        Post postSaved = postServices.addPost(postToSave1);
+        Post postSaved = Post.builder()
+                .id(1L)
+                .title("test add post")
+                .content("This is a new post for test")
+                .author(user).build();
+
+        when(postRepository.save(any(Post.class))).thenReturn(postSaved);
+        Post result = postServices.addPost(postToSave1);
 
         //Then
         ArgumentCaptor<Post> postArgumentCaptor = ArgumentCaptor.forClass(Post.class);
         verify(postRepository).save(postArgumentCaptor.capture());
+
         Post capturedPost = postArgumentCaptor.getValue();
-        assertThat(capturedPost).isEqualTo(postToSave1);
+        assertThat(capturedPost.getContent()).isEqualTo(postToSave1.getContent());
+        assertThat(capturedPost.getTitle()).isEqualTo(postToSave1.getTitle());
     }
 
 
     @Test
     void findAllCallTheRightMethodFromRepository() {
         //given
-        List<Post> posts= List.of(postToSave1,postToSave2);
+        List<Post> posts = List.of(postToSave2);
         //When
         when(postRepository.findAll()).thenReturn(posts);
         List<Post> listPostsFounded = postServices.findAllPosts();
@@ -79,9 +97,7 @@ class PostServicesImplTest {
 
     @Test
     void findPostByIdNullThrowException() {
-
-
-        assertThatThrownBy(() -> postServices.findPostById(postToSave1.getId()))
+        assertThatThrownBy(() -> postServices.findPostById(null))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("The id is null");
         verify(postRepository, never()).findById(any());
@@ -95,7 +111,7 @@ class PostServicesImplTest {
                 .isInstanceOf(EntityNotFoundException.class);
     }
 
-     @Test
+    @Test
     void findByIdSuccessful() {
         when(postRepository.findById(anyLong())).thenReturn(Optional.ofNullable(postWithId));
         Post postFounded = postServices.findPostById(postWithId.getId());

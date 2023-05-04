@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("api/auth")
 public class LoginController {
 
-    private final ILoginUserService loginUserService;
+    private final LoginUserService loginUserService;
 
-    public LoginController(ILoginUserService loginUserService) {
+    public LoginController(LoginUserService loginUserService) {
         this.loginUserService = loginUserService;
     }
 

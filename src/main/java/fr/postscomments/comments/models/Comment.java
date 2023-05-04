@@ -5,16 +5,14 @@ import fr.postscomments.posts.models.Post;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
 @Entity
+@Builder
 public class Comment {
 
     @Id
@@ -22,9 +20,9 @@ public class Comment {
     @Column(name = "id_comment")
     private Long id;
 
-    @Column(name = "Contente_comment")
+    @Column(name = "Content_comment")
     @NotBlank(message = "The comment must not be blanck")
-    private String contente;
+    private String content;
 
     @ManyToOne
     @JoinColumn(name = "id_user")

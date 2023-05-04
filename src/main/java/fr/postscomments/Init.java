@@ -3,8 +3,8 @@ package fr.postscomments;
 import fr.postscomments.authentification.models.ERole;
 import fr.postscomments.authentification.models.Role;
 import fr.postscomments.authentification.models.UserApp;
-import fr.postscomments.authentification.repository.IRoleRepository;
-import fr.postscomments.authentification.repository.IUserRepository;
+import fr.postscomments.authentification.repository.RoleRepository;
+import fr.postscomments.authentification.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -21,10 +21,10 @@ public class Init implements CommandLineRunner {
     @Autowired
     private Environment env;
     @Autowired
-    IRoleRepository roleRepo;
+    RoleRepository roleRepo;
 
     @Autowired
-    IUserRepository userRepository;
+    UserRepository userRepository;
 
     @Autowired
     PasswordEncoder encoder;
@@ -37,7 +37,7 @@ public class Init implements CommandLineRunner {
         role2.setNameRole(ERole.ROLE_ADMIN);
         UserApp userApp = new UserApp();
         userApp.setEmail("camille@gmail.com");
-        userApp.setPasseword(encoder.encode(env.getProperty("USER_PASSEWORD")));
+        userApp.setPasseword(encoder.encode("azerty"));
         userApp.setPhone("0672142332");
         userApp.setRoles(Set.of(role1));
 

@@ -23,7 +23,7 @@ public class Post {
 
     @NotBlank(message = "The type must not be blanck")
     @Column(name = "content_post")
-    private String contente;
+    private String content;
 
     @ManyToOne
     @JoinColumn(name = "id_user")
