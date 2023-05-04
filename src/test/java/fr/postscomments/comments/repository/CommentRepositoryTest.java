@@ -2,15 +2,11 @@ package fr.postscomments.comments.repository;
 
 import fr.postscomments.comments.models.Comment;
 import fr.postscomments.posts.models.Post;
-import fr.postscomments.posts.repository.IPostRepository;
-import fr.postscomments.posts.services.IPostServices;
-import fr.postscomments.posts.services.PostServicesImpl;
-import org.junit.jupiter.api.AfterEach;
+import fr.postscomments.posts.services.PostServices;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -21,14 +17,14 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-class ICommentRepositoryTest {
+class CommentRepositoryTest {
 
 
     @Autowired
-    private ICommentRepository commentRepository;
+    private CommentRepository commentRepository;
 
     @Autowired
-    private IPostServices postServices;
+    private PostServices postServices;
     private Post postSaved1 ;
 
     @BeforeEach

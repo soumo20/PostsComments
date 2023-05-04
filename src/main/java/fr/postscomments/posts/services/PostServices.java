@@ -4,7 +4,7 @@ import fr.postscomments.posts.models.Post;
 
 import java.util.List;
 
-public interface IPostServices {
+public interface PostServices {
 
     Post addPost(Post post);
 

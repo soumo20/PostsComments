@@ -5,7 +5,7 @@ import fr.postscomments.comments.models.Comment;
 
 import java.util.List;
 
-public interface ICommentServices {
+public interface CommentServices {
 
     Comment findCommentById(Long id);
 

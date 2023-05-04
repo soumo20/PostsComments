@@ -2,16 +2,16 @@ package fr.postscomments.posts.services;
 
 import fr.postscomments.shared.EntityNotFoundException;
 import fr.postscomments.posts.models.Post;
-import fr.postscomments.posts.repository.IPostRepository;
+import fr.postscomments.posts.repository.PostRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class PostServicesImpl implements IPostServices {
-    private final IPostRepository postsRepository;
+public class PostServicesImpl implements PostServices {
+    private final PostRepository postsRepository;
 
-    public PostServicesImpl(IPostRepository postsRepository) {
+    public PostServicesImpl(PostRepository postsRepository) {
         this.postsRepository = postsRepository;
     }
 

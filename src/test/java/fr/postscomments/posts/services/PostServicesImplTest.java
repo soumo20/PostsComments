@@ -2,7 +2,7 @@ package fr.postscomments.posts.services;
 
 import fr.postscomments.shared.EntityNotFoundException;
 import fr.postscomments.posts.models.Post;
-import fr.postscomments.posts.repository.IPostRepository;
+import fr.postscomments.posts.repository.PostRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -24,7 +24,7 @@ class PostServicesImplTest {
     private PostServicesImpl postServices;
 
     @Mock
-    private IPostRepository postRepository;
+    private PostRepository postRepository;
 
     Post postToSave1 = Post.builder()
             .title("3 Tips for Staying Focused While Working From Home")

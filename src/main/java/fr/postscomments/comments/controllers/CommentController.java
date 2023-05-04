@@ -2,7 +2,7 @@ package fr.postscomments.comments.controllers;
 
 import fr.postscomments.comments.dto.CommentDto;
 import fr.postscomments.comments.models.Comment;
-import fr.postscomments.comments.services.ICommentServices;
+import fr.postscomments.comments.services.CommentServices;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,9 +14,9 @@ import java.util.List;
 @RequestMapping("/api/v1/comments")
 public class CommentController {
 
-    private final ICommentServices commentServices;
+    private final CommentServices commentServices;
 
-    public CommentController(ICommentServices commentServices) {
+    public CommentController(CommentServices commentServices) {
         this.commentServices = commentServices;
     }
 
@@ -32,7 +32,6 @@ public class CommentController {
 
     @PostMapping("/addComment/{id}")
     public ResponseEntity<Comment> addCommentToPost(@Valid @RequestBody CommentDto comment, @PathVariable Long id) {
-        System.out.println(id);
         return new ResponseEntity<>(commentServices.addComment(comment, id), HttpStatus.CREATED);
     }
 

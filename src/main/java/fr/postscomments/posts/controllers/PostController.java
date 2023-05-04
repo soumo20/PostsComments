@@ -1,7 +1,7 @@
 package fr.postscomments.posts.controllers;
 
 import fr.postscomments.posts.models.Post;
-import fr.postscomments.posts.services.IPostServices;
+import fr.postscomments.posts.services.PostServices;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,10 +13,10 @@ import java.util.List;
 @RequestMapping("/api/v1/posts")
 public class PostController {
 
-    private final IPostServices postServices;
+    private final PostServices postServices;
 
 
-    public PostController(IPostServices postServices) {
+    public PostController(PostServices postServices) {
         this.postServices = postServices;
     }
 

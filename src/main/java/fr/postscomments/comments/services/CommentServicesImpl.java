@@ -1,36 +1,31 @@
 package fr.postscomments.comments.services;
 
 import fr.postscomments.authentification.models.UserApp;
-import fr.postscomments.authentification.repository.IUserRepository;
-import fr.postscomments.authentification.security.services.UserDetailsImpl;
+import fr.postscomments.authentification.repository.UserRepository;
 import fr.postscomments.authentification.security.services.UserServices;
 import fr.postscomments.comments.dto.CommentDto;
 import fr.postscomments.comments.models.Comment;
-import fr.postscomments.comments.repository.ICommentRepository;
+import fr.postscomments.comments.repository.CommentRepository;
 import fr.postscomments.posts.models.Post;
-import fr.postscomments.posts.repository.IPostRepository;
+import fr.postscomments.posts.repository.PostRepository;
 import fr.postscomments.shared.EntityNotFoundException;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class CommentServicesImpl implements ICommentServices {
+public class CommentServicesImpl implements CommentServices {
 
-    private final ICommentRepository commentRepository;
+    private final CommentRepository commentRepository;
 
-    private final IPostRepository postRepository;
+    private final PostRepository postRepository;
 
-    private final IUserRepository userRepository;
 
     private final UserServices userServices;
 
-    public CommentServicesImpl(ICommentRepository commentRepository, IPostRepository postRepository, IUserRepository userRepository, UserServices userServices) {
+    public CommentServicesImpl(CommentRepository commentRepository, PostRepository postRepository, UserServices userServices) {
         this.commentRepository = commentRepository;
         this.postRepository = postRepository;
-        this.userRepository = userRepository;
         this.userServices = userServices;
     }
 

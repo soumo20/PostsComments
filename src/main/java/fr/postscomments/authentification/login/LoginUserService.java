@@ -1,6 +1,6 @@
 package fr.postscomments.authentification.login;
 
-public interface ILoginUserService {
+public interface LoginUserService {
 
     JwtResponse login(LoginRequest loginRequest);
 

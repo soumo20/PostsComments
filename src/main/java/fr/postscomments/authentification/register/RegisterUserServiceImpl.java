@@ -3,8 +3,8 @@ package fr.postscomments.authentification.register;
 import fr.postscomments.authentification.models.ERole;
 import fr.postscomments.authentification.models.Role;
 import fr.postscomments.authentification.models.UserApp;
-import fr.postscomments.authentification.repository.IRoleRepository;
-import fr.postscomments.authentification.repository.IUserRepository;
+import fr.postscomments.authentification.repository.RoleRepository;
+import fr.postscomments.authentification.repository.UserRepository;
 import fr.postscomments.shared.EntityAlreadyExist;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -14,17 +14,17 @@ import java.util.Set;
 
 
 @Service
-public class RegisterUserServiceImpl implements IRegisterUserService {
+public class RegisterUserServiceImpl implements RegisterUserService {
 
-    private final IUserRepository userRepository;
+    private final UserRepository userRepository;
 
-    private final IRoleRepository roleRepository;
+    private final RoleRepository roleRepository;
 
     private final PasswordEncoder encoder;
 
     private static final String ERROR_ROLE_NOT_FOUND = "Error: Role is not found.";
 
-    public RegisterUserServiceImpl(IUserRepository userRepository, IRoleRepository roleRepository, PasswordEncoder encoder) {
+    public RegisterUserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder encoder) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.encoder = encoder;

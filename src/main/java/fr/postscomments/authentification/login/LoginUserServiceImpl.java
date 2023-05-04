@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class LoginUserServiceImpl implements ILoginUserService {
+public class LoginUserServiceImpl implements LoginUserService {
 
     private final JwtUtils jwtUtils;
     private final AuthenticationManager authenticationManager;

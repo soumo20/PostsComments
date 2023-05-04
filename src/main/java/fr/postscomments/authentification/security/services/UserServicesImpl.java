@@ -1,7 +1,7 @@
 package fr.postscomments.authentification.security.services;
 
 import fr.postscomments.authentification.models.UserApp;
-import fr.postscomments.authentification.repository.IUserRepository;
+import fr.postscomments.authentification.repository.UserRepository;
 import fr.postscomments.shared.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.security.core.Authentication;
@@ -10,9 +10,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 @Service
 public class UserServicesImpl implements UserServices {
 
-    private final IUserRepository userRepository;
+    private final UserRepository userRepository;
 
-    public UserServicesImpl(IUserRepository userRepository) {
+    public UserServicesImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 

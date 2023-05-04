@@ -1,9 +1,9 @@
 package fr.postscomments.comments.services;
 
 import fr.postscomments.comments.models.Comment;
-import fr.postscomments.comments.repository.ICommentRepository;
+import fr.postscomments.comments.repository.CommentRepository;
 import fr.postscomments.posts.models.Post;
-import fr.postscomments.posts.repository.IPostRepository;
+import fr.postscomments.posts.repository.PostRepository;
 import fr.postscomments.shared.EntityNotFoundException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -14,7 +14,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,10 +28,10 @@ class CommentServicesImplTest {
     private CommentServicesImpl commentServices;
 
     @Mock
-    private ICommentRepository commentRepository;
+    private CommentRepository commentRepository;
 
     @Mock
-    private IPostRepository postRepository;
+    private PostRepository postRepository;
 
     private static final Post POST_SAVED = Post.builder().id(1L)
             .title("3 Tips for Staying Focused While Working From DESK")
