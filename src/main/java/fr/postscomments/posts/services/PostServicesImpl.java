@@ -60,6 +60,4 @@ public class PostServicesImpl implements PostServices {
         post.setAuthor(userServices.findUserConnected());
         return postsRepository.save(post);
     }
-
-
 }
