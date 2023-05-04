@@ -1,7 +1,5 @@
 package fr.postscomments.comments.dto;
 
-
-import jakarta.validation.constraints.NotBlank;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,8 +7,9 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
-public class CommentDto {
+public class CommentUpdateDto {
 
-    @NotBlank(message = "The comment must not be blanck")
+    private Long id;
+
     private String content;
 }

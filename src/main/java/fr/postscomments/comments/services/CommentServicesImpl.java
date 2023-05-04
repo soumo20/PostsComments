@@ -1,8 +1,8 @@
 package fr.postscomments.comments.services;
 
 import fr.postscomments.authentification.models.UserApp;
-import fr.postscomments.authentification.repository.UserRepository;
 import fr.postscomments.authentification.security.services.UserServices;
+import fr.postscomments.comments.dto.CommentUpdateDto;
 import fr.postscomments.comments.dto.CommentDto;
 import fr.postscomments.comments.models.Comment;
 import fr.postscomments.comments.repository.CommentRepository;
@@ -43,12 +43,18 @@ public class CommentServicesImpl implements CommentServices {
         Post post = postRepository.findById(idPost).orElseThrow(() -> new EntityNotFoundException("No post founded with the given id " + idPost));
         UserApp user = userServices.findUserConnected();
         Comment comment = Comment.builder().content(commentToAdd.getContent()).post(post).author(user).build();
-
         return commentRepository.save(comment);
     }
 
     @Override
-    public Comment updateComment(Comment commentUpdated) {
+    public Comment updateComment(CommentUpdateDto commentUpdateDto) {
+        Comment commentOld = commentRepository.findById(commentUpdateDto.getId()).orElseThrow(() -> new EntityNotFoundException("No such comment with the given id "+commentUpdateDto.getId()));
+        Comment commentUpdated = Comment.builder()
+                .id(commentUpdateDto.getId())
+                .content(commentUpdateDto.getContent())
+                .author(commentOld.getAuthor())
+                .post(commentOld.getPost())
+                .build();
         return commentRepository.save(commentUpdated);
     }
 

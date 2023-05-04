@@ -57,11 +57,7 @@ public class PostServicesImpl implements PostServices {
 
     @Override
     public Post updatePost(Post post) {
-        UserApp connected = userServices.findUserConnected();
-        if(!post.getAuthor().equals(connected)){
-            throw new IllegalArgumentException("You can not modify the posts of others author");
-        }
-        post.setAuthor(connected);
+        post.setAuthor(userServices.findUserConnected());
         return postsRepository.save(post);
     }
 

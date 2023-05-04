@@ -1,6 +1,7 @@
 package fr.postscomments.comments.controllers;
 
 import fr.postscomments.comments.dto.CommentDto;
+import fr.postscomments.comments.dto.CommentUpdateDto;
 import fr.postscomments.comments.models.Comment;
 import fr.postscomments.comments.services.CommentServices;
 import jakarta.validation.Valid;
@@ -36,8 +37,8 @@ public class CommentController {
     }
 
     @PutMapping("/comments/{id}")
-    public ResponseEntity<Comment> updatePost(@Valid @RequestBody Comment commentUpdated) {
-        return new ResponseEntity<>(commentServices.updateComment(commentUpdated), HttpStatus.ACCEPTED);
+    public ResponseEntity<Comment> updateComment(@Valid @RequestBody CommentUpdateDto commentUpdateDto) {
+        return new ResponseEntity<>(commentServices.updateComment(commentUpdateDto), HttpStatus.ACCEPTED);
     }
 
     @DeleteMapping("/posts/{id}")

@@ -1,5 +1,6 @@
 package fr.postscomments.comments.services;
 
+import fr.postscomments.comments.dto.CommentUpdateDto;
 import fr.postscomments.comments.dto.CommentDto;
 import fr.postscomments.comments.models.Comment;
 
@@ -11,7 +12,7 @@ public interface CommentServices {
 
     Comment addComment(CommentDto commentDto, Long idPost);
 
-    Comment updateComment(Comment commentUpdated);
+    Comment updateComment(CommentUpdateDto commentUpdated);
 
     void deleteComment(Long id);
 
