@@ -29,7 +29,7 @@ public class PdfController {
     public void generatePdfFile(HttpServletResponse response, @PathVariable Long id) throws DocumentException, IOException
   {
     response.setContentType("application/pdf");
-    DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-DD:HH:MM:SS");
+    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-DD:HH:MM:SS");
     String currentDateTime = dateFormat.format(new Date());
     String headerkey = "Content-Disposition";
     String headervalue = "attachment; filename=student" + currentDateTime + ".pdf";

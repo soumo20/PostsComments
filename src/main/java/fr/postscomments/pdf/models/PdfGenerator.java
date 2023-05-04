@@ -37,7 +37,6 @@ public class PdfGenerator {
         paragraph2.setAlignment(Paragraph.ALIGN_JUSTIFIED);
         // Adding the created paragraph in the document
         document.add(paragraph2);
-
         // Closing the document
         document.close();
     }
