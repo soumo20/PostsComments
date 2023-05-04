@@ -1,5 +1,8 @@
 package fr.postscomments.comments.services;
 
+import fr.postscomments.authentification.models.UserApp;
+import fr.postscomments.authentification.security.services.UserServices;
+import fr.postscomments.comments.dto.CommentDto;
 import fr.postscomments.comments.models.Comment;
 import fr.postscomments.comments.repository.CommentRepository;
 import fr.postscomments.posts.models.Post;
@@ -33,6 +36,10 @@ class CommentServicesImplTest {
     @Mock
     private PostRepository postRepository;
 
+    @Mock
+    private UserServices userServices;
+
+
     private static final Post POST_SAVED = Post.builder().id(1L)
             .title("3 Tips for Staying Focused While Working From DESK")
             .content("""
@@ -41,10 +48,9 @@ class CommentServicesImplTest {
                     """)
             .build();
 
-    private static final Comment COMMENT_TO_ADD1 = Comment.builder()
-            .content("This is a first comment")
-            .post(POST_SAVED)
+    private static final CommentDto COMMENT_TO_ADD1 = CommentDto.builder().content("This is a first comment")
             .build();
+
     @Nested
     @DisplayName("AddCommentToPostTests")
     class AddCommentToPost {
@@ -53,8 +59,8 @@ class CommentServicesImplTest {
 
             //when
             assertThatThrownBy(() -> commentServices.addComment(COMMENT_TO_ADD1, null))
-                    .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("The id of the post must not be null");
+                    .isInstanceOf(EntityNotFoundException.class)
+                    .hasMessage("No post founded with the given id null");
             verify(commentRepository, never()).save(any());
         }
 
@@ -71,15 +77,18 @@ class CommentServicesImplTest {
 
         @Test
         void addCommentToExistingPostSuccess() {
-
             //When
+            // Mock the userServices.findUserConnected() method
+            UserApp user = new UserApp();
             when(postRepository.findById(POST_SAVED.getId())).thenReturn(Optional.of(POST_SAVED));
+            when(userServices.findUserConnected()).thenReturn(user);
+
             Comment commentAdded = commentServices.addComment(COMMENT_TO_ADD1, POST_SAVED.getId());
             //Then
             ArgumentCaptor<Comment> commentArgumentCaptor = ArgumentCaptor.forClass(Comment.class);
             verify(commentRepository).save(commentArgumentCaptor.capture());
             Comment capturedComment = commentArgumentCaptor.getValue();
-            assertThat(capturedComment).isEqualTo(COMMENT_TO_ADD1);
+            assertThat(capturedComment.getContent()).isEqualTo(COMMENT_TO_ADD1.getContent());
         }
     }
 

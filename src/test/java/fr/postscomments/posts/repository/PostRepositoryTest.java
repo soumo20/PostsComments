@@ -1,44 +1,38 @@
 package fr.postscomments.posts.repository;
 
-import fr.postscomments.posts.dto.PostDto;
+import fr.postscomments.authentification.models.UserApp;
 import fr.postscomments.posts.models.Post;
-import fr.postscomments.posts.services.PostServices;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@SpringBootTest
+@DataJpaTest
 class PostRepositoryTest {
+    @Autowired
+    private TestEntityManager entityManager;
 
     @Autowired
     private PostRepository postRepository;
 
-    @Autowired
-    private PostServices postServices;
-
-    private Post postSaved1;
-
-    @BeforeEach
-    public void setUp() {
-        PostDto post1 = PostDto.builder()
-                .title("Post 1")
-                .content("This is the content of Post 1")
-                .build();
-        postSaved1 = postServices.addPost(post1);
-    }
-
     @Test
-    void existPostByIdTrue() {
-        //When
-        Boolean existPost = postRepository.existPostById(postSaved1.getId());
+    public void testExistPostByIdTrue() {
+        UserApp author = new UserApp();
+        entityManager.persistAndFlush(author);
 
-        //Then
-        assertTrue(existPost);
+        Post post = new Post();
+        post.setTitle("Test post");
+        post.setContent("Test content");
+        post.setAuthor(author);
+        entityManager.persistAndFlush(post);
+
+        boolean result = postRepository.existPostById(post.getId());
+
+        assertTrue(result);
     }
-
 
     @Test
     void existPostByIdfALSE() {

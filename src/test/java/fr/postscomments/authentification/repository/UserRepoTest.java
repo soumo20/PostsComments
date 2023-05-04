@@ -16,6 +16,7 @@ class UserRepoTest {
     private UserRepository userRepository;
 
 
+
     @Nested
     @DisplayName("Verify if the email exist")
     class CheckExistByEmail {

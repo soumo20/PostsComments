@@ -1,5 +1,7 @@
 package fr.postscomments.posts.services;
 
+import fr.postscomments.authentification.models.UserApp;
+import fr.postscomments.authentification.security.services.UserServices;
 import fr.postscomments.posts.dto.PostDto;
 import fr.postscomments.shared.EntityNotFoundException;
 import fr.postscomments.posts.models.Post;
@@ -27,6 +29,9 @@ class PostServicesImplTest {
     @Mock
     private PostRepository postRepository;
 
+    @Mock
+    private UserServices userServices;
+
     PostDto postToSave1 = PostDto.builder()
             .title("3 Tips for Staying Focused While Working From Home")
             .content("""
@@ -53,22 +58,34 @@ class PostServicesImplTest {
 
     @Test
     void savePostWithSuccess() {
+        // Mock the userServices.findUserConnected() method
+        UserApp user = new UserApp();
+        when(userServices.findUserConnected()).thenReturn(user);
 
         //When
-        Post postSaved = postServices.addPost(postToSave1);
+        Post postSaved = Post.builder()
+                .id(1L)
+                .title("test add post")
+                .content("This is a new post for test")
+                .author(user).build();
+
+        when(postRepository.save(any(Post.class))).thenReturn(postSaved);
+        Post result = postServices.addPost(postToSave1);
 
         //Then
         ArgumentCaptor<Post> postArgumentCaptor = ArgumentCaptor.forClass(Post.class);
         verify(postRepository).save(postArgumentCaptor.capture());
+
         Post capturedPost = postArgumentCaptor.getValue();
-        assertThat(capturedPost).isEqualTo(postToSave1);
+        assertThat(capturedPost.getContent()).isEqualTo(postToSave1.getContent());
+        assertThat(capturedPost.getTitle()).isEqualTo(postToSave1.getTitle());
     }
 
 
     @Test
     void findAllCallTheRightMethodFromRepository() {
         //given
-        List<Post> posts= List.of(postToSave2);
+        List<Post> posts = List.of(postToSave2);
         //When
         when(postRepository.findAll()).thenReturn(posts);
         List<Post> listPostsFounded = postServices.findAllPosts();
@@ -94,7 +111,7 @@ class PostServicesImplTest {
                 .isInstanceOf(EntityNotFoundException.class);
     }
 
-     @Test
+    @Test
     void findByIdSuccessful() {
         when(postRepository.findById(anyLong())).thenReturn(Optional.ofNullable(postWithId));
         Post postFounded = postServices.findPostById(postWithId.getId());
