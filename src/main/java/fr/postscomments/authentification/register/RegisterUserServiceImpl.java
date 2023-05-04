@@ -5,7 +5,7 @@ import fr.postscomments.authentification.models.Role;
 import fr.postscomments.authentification.models.UserApp;
 import fr.postscomments.authentification.repository.RoleRepository;
 import fr.postscomments.authentification.repository.UserRepository;
-import fr.postscomments.shared.EntityAlreadyExist;
+import fr.postscomments.shared.exceptions.EntityAlreadyExist;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 

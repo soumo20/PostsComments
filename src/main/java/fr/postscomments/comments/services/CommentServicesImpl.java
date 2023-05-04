@@ -8,7 +8,7 @@ import fr.postscomments.comments.models.Comment;
 import fr.postscomments.comments.repository.CommentRepository;
 import fr.postscomments.posts.models.Post;
 import fr.postscomments.posts.repository.PostRepository;
-import fr.postscomments.shared.EntityNotFoundException;
+import fr.postscomments.shared.exceptions.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

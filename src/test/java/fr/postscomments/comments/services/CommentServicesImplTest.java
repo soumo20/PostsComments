@@ -7,7 +7,7 @@ import fr.postscomments.comments.models.Comment;
 import fr.postscomments.comments.repository.CommentRepository;
 import fr.postscomments.posts.models.Post;
 import fr.postscomments.posts.repository.PostRepository;
-import fr.postscomments.shared.EntityNotFoundException;
+import fr.postscomments.shared.exceptions.EntityNotFoundException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
