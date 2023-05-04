@@ -5,6 +5,10 @@ import fr.postscomments.authentification.models.Role;
 import fr.postscomments.authentification.models.UserApp;
 import fr.postscomments.authentification.repository.RoleRepository;
 import fr.postscomments.authentification.repository.UserRepository;
+import fr.postscomments.posts.models.Post;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -18,6 +22,10 @@ import java.util.Set;
 @Slf4j
 public class Init implements CommandLineRunner {
 
+
+    @PersistenceContext
+    private EntityManager entityManager;
+
     @Autowired
     private Environment env;
     @Autowired
@@ -29,6 +37,7 @@ public class Init implements CommandLineRunner {
     @Autowired
     PasswordEncoder encoder;
 
+    @Transactional
     @Override
     public void run(String... args) throws Exception {
         Role role1 = new Role();
@@ -41,13 +50,19 @@ public class Init implements CommandLineRunner {
         userApp.setPhone("0672142332");
         userApp.setRoles(Set.of(role1));
 
-        try {
-            roleRepo.save(role1);
-            roleRepo.save(role2);
-            userRepository.save(userApp);
-        } catch (Exception ex) {
-            log.error("Error persisting roles: " + ex.getMessage());
-        }
+        Post post = new Post();
+        post.setTitle("Test post");
+        post.setContent("Test content");
+        post.setAuthor(userApp);
+
+        entityManager.persist(role1);
+        entityManager.persist(role2);
+        entityManager.persist(userApp);
+        entityManager.persist(post);
+        entityManager.flush();
+
+
+
     }
 }
 

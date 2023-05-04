@@ -3,7 +3,7 @@ package fr.postscomments.posts.services;
 import fr.postscomments.authentification.models.UserApp;
 import fr.postscomments.authentification.security.services.UserServices;
 import fr.postscomments.posts.dto.PostDto;
-import fr.postscomments.shared.EntityNotFoundException;
+import fr.postscomments.shared.exceptions.EntityNotFoundException;
 import fr.postscomments.posts.models.Post;
 import fr.postscomments.posts.repository.PostRepository;
 import org.junit.jupiter.api.Test;

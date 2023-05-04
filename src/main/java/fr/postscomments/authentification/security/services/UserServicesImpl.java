@@ -2,7 +2,7 @@ package fr.postscomments.authentification.security.services;
 
 import fr.postscomments.authentification.models.UserApp;
 import fr.postscomments.authentification.repository.UserRepository;
-import fr.postscomments.shared.EntityNotFoundException;
+import fr.postscomments.shared.exceptions.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
