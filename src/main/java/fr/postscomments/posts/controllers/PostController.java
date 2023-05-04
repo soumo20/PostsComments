@@ -1,5 +1,6 @@
 package fr.postscomments.posts.controllers;
 
+import fr.postscomments.posts.dto.PostDto;
 import fr.postscomments.posts.models.Post;
 import fr.postscomments.posts.services.PostServices;
 import jakarta.validation.Valid;
@@ -32,8 +33,8 @@ public class PostController {
     }
 
     @PostMapping("/createPost")
-    public ResponseEntity<Post> createPost(@Valid @RequestBody Post postToCreate) {
-        return new ResponseEntity<>(postServices.addPost(postToCreate), HttpStatus.CREATED);
+    public ResponseEntity<Post> createPost(@Valid @RequestBody PostDto postDto) {
+        return new ResponseEntity<>(postServices.addPost(postDto), HttpStatus.CREATED);
     }
 
     @PutMapping("/updatePost")

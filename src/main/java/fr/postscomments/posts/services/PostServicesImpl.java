@@ -1,5 +1,8 @@
 package fr.postscomments.posts.services;
 
+import fr.postscomments.authentification.models.UserApp;
+import fr.postscomments.authentification.security.services.UserServices;
+import fr.postscomments.posts.dto.PostDto;
 import fr.postscomments.shared.EntityNotFoundException;
 import fr.postscomments.posts.models.Post;
 import fr.postscomments.posts.repository.PostRepository;
@@ -11,13 +14,23 @@ import java.util.List;
 public class PostServicesImpl implements PostServices {
     private final PostRepository postsRepository;
 
-    public PostServicesImpl(PostRepository postsRepository) {
+    private final UserServices userServices;
+
+    public PostServicesImpl(PostRepository postsRepository, UserServices userServices) {
         this.postsRepository = postsRepository;
+        this.userServices = userServices;
     }
 
 
     @Override
-    public Post addPost(Post post) {
+    public Post addPost(PostDto postDto) {
+        UserApp user = userServices.findUserConnected();
+        Post post = Post.builder()
+                .title(postDto.getTitle())
+                .content(postDto.getContent())
+                .author(user)
+                .build();
+
         return postsRepository.save(post);
     }
 
@@ -44,6 +57,11 @@ public class PostServicesImpl implements PostServices {
 
     @Override
     public Post updatePost(Post post) {
+        UserApp connected = userServices.findUserConnected();
+        if(!post.getAuthor().equals(connected)){
+            throw new IllegalArgumentException("You can not modify the posts of others author");
+        }
+        post.setAuthor(connected);
         return postsRepository.save(post);
     }
 

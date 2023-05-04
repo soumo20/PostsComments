@@ -1,6 +1,7 @@
 package fr.postscomments.comments.repository;
 
 import fr.postscomments.comments.models.Comment;
+import fr.postscomments.posts.dto.PostDto;
 import fr.postscomments.posts.models.Post;
 import fr.postscomments.posts.services.PostServices;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,7 +31,7 @@ class CommentRepositoryTest {
     @BeforeEach
     public void setup() {
         // create and save some posts
-        Post post1 = Post.builder()
+        PostDto post1 = PostDto.builder()
                 .title("Post 1")
                 .content("This is the content of Post 1")
                 .build();

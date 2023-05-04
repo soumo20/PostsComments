@@ -1,5 +1,6 @@
 package fr.postscomments.posts.repository;
 
+import fr.postscomments.posts.dto.PostDto;
 import fr.postscomments.posts.models.Post;
 import fr.postscomments.posts.services.PostServices;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,7 +23,7 @@ class PostRepositoryTest {
 
     @BeforeEach
     public void setUp() {
-        Post post1 = Post.builder()
+        PostDto post1 = PostDto.builder()
                 .title("Post 1")
                 .content("This is the content of Post 1")
                 .build();

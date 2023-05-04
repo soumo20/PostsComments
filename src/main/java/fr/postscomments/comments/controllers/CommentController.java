@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/comments")
+@RequestMapping("/api/v1")
 public class CommentController {
 
     private final CommentServices commentServices;
@@ -20,27 +20,27 @@ public class CommentController {
         this.commentServices = commentServices;
     }
 
-    @GetMapping("/post/{id}")
-    public ResponseEntity<List<Comment>> getCommentsOfSpecPost(@PathVariable() Long idPost) {
-        return new ResponseEntity<>(commentServices.findAllCommentsOfOnePost(idPost), HttpStatus.FOUND);
+    @GetMapping("/posts/{id}/comments")
+    public ResponseEntity<List<Comment>> getCommentsOfSpecPost(@PathVariable() Long id) {
+        return new ResponseEntity<>(commentServices.findAllCommentsOfOnePost(id), HttpStatus.FOUND);
     }
 
-    @GetMapping("/id/{id}")
+    @GetMapping("comments/{id}")
     public ResponseEntity<Comment> getCommentById(@PathVariable() Long id) {
         return new ResponseEntity<>(commentServices.findCommentById(id), HttpStatus.OK);
     }
 
-    @PostMapping("/addComment/{id}")
+    @PostMapping("/posts/{id}/comments")
     public ResponseEntity<Comment> addCommentToPost(@Valid @RequestBody CommentDto comment, @PathVariable Long id) {
         return new ResponseEntity<>(commentServices.addComment(comment, id), HttpStatus.CREATED);
     }
 
-    @PutMapping("/updateComment")
+    @PutMapping("/comments/{id}")
     public ResponseEntity<Comment> updatePost(@Valid @RequestBody Comment commentUpdated) {
         return new ResponseEntity<>(commentServices.updateComment(commentUpdated), HttpStatus.ACCEPTED);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/posts/{id}")
     public ResponseEntity<Void> deletePost(@PathVariable() Long id) {
         commentServices.deleteComment(id);
         return ResponseEntity.noContent().build();

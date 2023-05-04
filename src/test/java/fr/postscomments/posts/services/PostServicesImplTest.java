@@ -1,5 +1,6 @@
 package fr.postscomments.posts.services;
 
+import fr.postscomments.posts.dto.PostDto;
 import fr.postscomments.shared.EntityNotFoundException;
 import fr.postscomments.posts.models.Post;
 import fr.postscomments.posts.repository.PostRepository;
@@ -26,7 +27,7 @@ class PostServicesImplTest {
     @Mock
     private PostRepository postRepository;
 
-    Post postToSave1 = Post.builder()
+    PostDto postToSave1 = PostDto.builder()
             .title("3 Tips for Staying Focused While Working From Home")
             .content("""
                     1.Establish a routine: Having a set routine can help you create structure in your day and keep
@@ -67,7 +68,7 @@ class PostServicesImplTest {
     @Test
     void findAllCallTheRightMethodFromRepository() {
         //given
-        List<Post> posts= List.of(postToSave1,postToSave2);
+        List<Post> posts= List.of(postToSave2);
         //When
         when(postRepository.findAll()).thenReturn(posts);
         List<Post> listPostsFounded = postServices.findAllPosts();
@@ -79,7 +80,7 @@ class PostServicesImplTest {
 
     @Test
     void findPostByIdNullThrowException() {
-        assertThatThrownBy(() -> postServices.findPostById(postToSave1.getId()))
+        assertThatThrownBy(() -> postServices.findPostById(null))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("The id is null");
         verify(postRepository, never()).findById(any());
