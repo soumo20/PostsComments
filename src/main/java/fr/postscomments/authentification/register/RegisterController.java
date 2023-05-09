@@ -3,18 +3,18 @@ package fr.postscomments.authentification.register;
 import fr.postscomments.authentification.login.MessageResponse;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("api/auth")
 public class RegisterController {
     private final RegisterUserService registerUserService;
 
-    public RegisterController(RegisterUserService registerUserService) {
+    private final RegistrationService registrationService;
+
+    public RegisterController(RegisterUserService registerUserService, RegistrationService registrationService) {
         this.registerUserService = registerUserService;
+        this.registrationService = registrationService;
     }
 
 
@@ -23,5 +23,10 @@ public class RegisterController {
 
         registerUserService.register(signUpRequest);
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+    }
+
+    @GetMapping(path = "confirm")
+    public String confirm(@RequestParam("token") String token) {
+        return registrationService.confirmToken(token);
     }
 }

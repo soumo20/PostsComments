@@ -17,6 +17,9 @@ public class UserDetailsImpl implements UserDetails {
 
     @JsonIgnore
     private final String password;
+
+    private Boolean locked;
+    private Boolean enabled;
     private final Collection<? extends GrantedAuthority> authorities;
 
     public UserDetailsImpl(Long id, String email, String password,
@@ -25,6 +28,8 @@ public class UserDetailsImpl implements UserDetails {
         this.email = email;
         this.password = password;
         this.authorities = authorities;
+        this.locked = false;
+        this.enabled = false;
     }
 
     public static UserDetailsImpl build(UserApp user) {
@@ -76,7 +81,7 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return enabled;
     }
 
     @Override
@@ -97,4 +102,6 @@ public class UserDetailsImpl implements UserDetails {
     public Long getId() {
         return id;
     }
+
+
 }

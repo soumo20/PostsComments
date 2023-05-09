@@ -44,7 +44,7 @@ public class WebSecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http, AuthEntryPointJwt unauthorizedHandler,UserDetailsServicesImpl userDetailsService) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http, AuthEntryPointJwt unauthorizedHandler, UserDetailsServicesImpl userDetailsService) throws Exception {
         http
                 .cors().and().csrf().disable()
                 //If there is any exception it will be handler by entryPoint and don't create session for user
