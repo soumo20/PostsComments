@@ -15,6 +15,9 @@ import java.util.Set;
 public class RolesServicesImpl implements RolesServices {
     private final RoleRepository roleRepository;
 
+
+    private static String errorMessage = "Role not found";
+
     public RolesServicesImpl(RoleRepository roleRepository) {
         this.roleRepository = roleRepository;
     }
@@ -26,17 +29,17 @@ public class RolesServicesImpl implements RolesServices {
         Set<Role> roles = new HashSet<>();
 
         if (strRoles == null) {
-            Role userRole = roleRepository.findOneByNameRole(ERole.ROLE_USER).orElseThrow(() -> new EntityNotFoundException("Role not found"));
+            Role userRole = roleRepository.findOneByNameRole(ERole.ROLE_USER).orElseThrow(() -> new EntityNotFoundException(errorMessage));
             roles.add(userRole);
         } else {
             strRoles.forEach(role -> {
-                if (role.equals("admin")) {
+                if (role.getNameRole().name().equals("admin")) {
                     Role adminRole = roleRepository.findOneByNameRole(ERole.ROLE_ADMIN)
-                            .orElseThrow(() -> new EntityNotFoundException("Role not found"));
+                            .orElseThrow(() -> new EntityNotFoundException(errorMessage));
                     roles.add(adminRole);
                 } else {
                     Role userRole = roleRepository.findOneByNameRole(ERole.ROLE_USER)
-                            .orElseThrow(() -> new EntityNotFoundException("Role not found"));
+                            .orElseThrow(() -> new EntityNotFoundException(errorMessage));
                     roles.add(userRole);
                 }
             });

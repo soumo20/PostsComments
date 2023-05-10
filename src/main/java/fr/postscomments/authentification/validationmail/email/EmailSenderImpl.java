@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 public class EmailSenderImpl implements EmailSender {
 
     private final JavaMailSender mailSender;
-    private final static Logger logger = LoggerFactory.getLogger(EmailSenderImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(EmailSenderImpl.class);
 
     public EmailSenderImpl(JavaMailSender mailSender) {
         this.mailSender = mailSender;
@@ -31,7 +31,7 @@ public class EmailSenderImpl implements EmailSender {
             helper.setFrom("test@email.com");
             mailSender.send(mimeMessage);
         } catch (MessagingException e) {
-            logger.error("Failed to send email for: " + email + "\n" + e);
+            logger.error("Failed to send email for: %s \n %s", email, e);
             throw new IllegalArgumentException("Failed to send email for: " + email);
         }
 

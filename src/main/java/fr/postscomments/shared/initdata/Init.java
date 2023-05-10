@@ -1,4 +1,4 @@
-package fr.postscomments;
+package fr.postscomments.shared.initdata;
 
 import fr.postscomments.authentification.models.ERole;
 import fr.postscomments.authentification.models.Role;
@@ -61,7 +61,6 @@ public class Init implements CommandLineRunner {
         entityManager.persist(userApp);
         entityManager.persist(post);
         entityManager.flush();
-
 
 
     }

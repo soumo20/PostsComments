@@ -1,9 +1,6 @@
 package fr.postscomments.pdf.models;
 
 import com.lowagie.text.*;
-import com.lowagie.text.pdf.CMYKColor;
-import com.lowagie.text.pdf.PdfPCell;
-import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
 import fr.postscomments.posts.models.Post;
 import jakarta.servlet.http.HttpServletResponse;
@@ -29,12 +26,12 @@ public class PdfGenerator {
         // Creating paragraph
         Paragraph paragraph1 = new Paragraph(post.getTitle(), fontTiltle);
         // Aligning the paragraph in the document
-        paragraph1.setAlignment(Paragraph.ALIGN_CENTER);
+        paragraph1.setAlignment(Element.ALIGN_CENTER);
         // Adding the created paragraph in the document
         document.add(paragraph1);
         // Creating a second paragraph
         Paragraph paragraph2 = new Paragraph(post.getContent(), fontParagraph);
-        paragraph2.setAlignment(Paragraph.ALIGN_JUSTIFIED);
+        paragraph2.setAlignment(Element.ALIGN_JUSTIFIED);
         // Adding the created paragraph in the document
         document.add(paragraph2);
         // Closing the document

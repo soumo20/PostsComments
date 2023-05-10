@@ -29,7 +29,6 @@ public class LoginUserServiceImpl implements LoginUserService {
     @Override
     public JwtResponse login(LoginRequest loginRequest) {
         if (userRepository.isEnable(loginRequest.getEmail())) {
-            System.out.println("Hi");
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
             SecurityContextHolder.getContext().setAuthentication(authentication);

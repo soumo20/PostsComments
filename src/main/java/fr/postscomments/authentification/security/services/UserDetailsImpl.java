@@ -18,7 +18,7 @@ public class UserDetailsImpl implements UserDetails {
     @JsonIgnore
     private final String password;
 
-    private Boolean locked;
+
     private Boolean enabled;
     private final Collection<? extends GrantedAuthority> authorities;
 
@@ -28,7 +28,6 @@ public class UserDetailsImpl implements UserDetails {
         this.email = email;
         this.password = password;
         this.authorities = authorities;
-        this.locked = false;
         this.enabled = enabled;
     }
 
