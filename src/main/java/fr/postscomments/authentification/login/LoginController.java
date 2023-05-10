@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("api/auth")
+@RequestMapping("api/auth/login")
 public class LoginController {
 
     private final LoginUserService loginUserService;
@@ -18,7 +18,7 @@ public class LoginController {
     }
 
 
-    @PostMapping("/login")
+    @PostMapping
     public ResponseEntity<JwtResponse> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
         return ResponseEntity.ok(loginUserService.login(loginRequest));
     }

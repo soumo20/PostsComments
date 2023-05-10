@@ -22,14 +22,14 @@ public class UserDetailsImpl implements UserDetails {
     private Boolean enabled;
     private final Collection<? extends GrantedAuthority> authorities;
 
-    public UserDetailsImpl(Long id, String email, String password,
+    public UserDetailsImpl(Long id, String email, String password, boolean enabled,
                            Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
         this.email = email;
         this.password = password;
         this.authorities = authorities;
         this.locked = false;
-        this.enabled = false;
+        this.enabled = enabled;
     }
 
     public static UserDetailsImpl build(UserApp user) {
@@ -41,6 +41,7 @@ public class UserDetailsImpl implements UserDetails {
                 user.getId(),
                 user.getEmail(),
                 user.getPassword(),
+                user.getEnabled(),
                 authorities);
     }
 

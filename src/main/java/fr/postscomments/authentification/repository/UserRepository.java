@@ -23,4 +23,7 @@ public interface UserRepository extends JpaRepository<UserApp, Long> {
     @Query("UPDATE UserApp a SET a.enabled=true WHERE a.email=?1")
     int enableAppUser(String email);
 
+    @Query("SELECT CASE WHEN COUNT(u) > 0 THEN true ELSE false END FROM UserApp u WHERE u.email = :email AND u.enabled = true")
+    boolean isEnable(String email);
+
 }

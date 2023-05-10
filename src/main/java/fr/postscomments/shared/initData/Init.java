@@ -48,6 +48,7 @@ public class Init implements CommandLineRunner {
         userApp.setEmail("camille@gmail.com");
         userApp.setPassword(encoder.encode("azerty"));
         userApp.setPhone("0672142332");
+        userApp.setEnabled(true);
         userApp.setRoles(Set.of(role1));
 
         Post post = new Post();

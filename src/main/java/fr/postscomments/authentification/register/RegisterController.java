@@ -8,12 +8,12 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("api/auth/registration")
 public class RegisterController {
-    private final RegisterUserService registerUserService;
+
 
     private final RegistrationService registrationService;
 
-    public RegisterController(RegisterUserService registerUserService, RegistrationService registrationService) {
-        this.registerUserService = registerUserService;
+    public RegisterController(RegistrationService registrationService) {
+
         this.registrationService = registrationService;
     }
 
@@ -27,6 +27,7 @@ public class RegisterController {
 
     @GetMapping("/confirm/token={token}")
     public String confirm(@PathVariable("token") String token) {
+
         return registrationService.confirmToken(token);
     }
 }

@@ -4,10 +4,12 @@ import fr.postscomments.authentification.models.ERole;
 import fr.postscomments.authentification.models.Role;
 import fr.postscomments.authentification.models.UserApp;
 import fr.postscomments.authentification.repository.RoleRepository;
+import fr.postscomments.authentification.repository.UserRepository;
 import fr.postscomments.authentification.validationmail.email.EmailSender;
 import fr.postscomments.authentification.validationmail.email.EmailValidator;
 import fr.postscomments.authentification.validationmail.token.ConfirmationToken;
 import fr.postscomments.authentification.validationmail.token.ConfirmationTokenService;
+import fr.postscomments.shared.exceptions.EntityAlreadyExist;
 import jakarta.transaction.Transactional;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -16,32 +18,77 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+import java.util.UUID;
 
 @Service
 public class RegistrationService {
-    private final RegisterUserServiceImpl appUserService;
+
+    private final UserRepository userRepository;
+
     private final EmailValidator emailValidator;
     private final ConfirmationTokenService confirmTokenService;
     private final EmailSender emailSender;
 
-      private final RoleRepository roleRepository;
+    private final RoleRepository roleRepository;
 
     private final PasswordEncoder encoder;
 
+    private final ConfirmationTokenService confirmationTokenService;
+
+
     private static final String ERROR_ROLE_NOT_FOUND = "Error: Role is not found.";
-    public RegistrationService(RegisterUserServiceImpl appUserService, EmailValidator emailValidator, ConfirmationTokenService confirmTokenService, EmailSender emailSender, RoleRepository roleRepository, PasswordEncoder encoder) {
-        this.appUserService = appUserService;
+
+    public RegistrationService(UserRepository userRepository, EmailValidator emailValidator, ConfirmationTokenService confirmTokenService, EmailSender emailSender, RoleRepository roleRepository, PasswordEncoder encoder, ConfirmationTokenService confirmationTokenService) {
+        this.userRepository = userRepository;
         this.emailValidator = emailValidator;
         this.confirmTokenService = confirmTokenService;
         this.emailSender = emailSender;
         this.roleRepository = roleRepository;
         this.encoder = encoder;
+        this.confirmationTokenService = confirmationTokenService;
     }
 
     public String register(SignUpRequest request) {
-        boolean isValidEmail = emailValidator.test(request.getEmail());
-        if (isValidEmail) {
-             Set<Role> strRoles = request.getRoles();
+
+        if (!emailValidator.test(request.getEmail())) {
+            throw new IllegalStateException(String.format("Email %s, not valid", request.getEmail()));
+        }
+        String tokenForNewUser = registreUserService(new UserApp(request.getEmail(), request.getPassword(), request.getPhone(), request.getRoles()));
+
+        //Since, we are running the spring boot application in localhost, we are hardcoding the
+        //url of the server. We are creating a POST request with token param
+        String link = "http://localhost:8080/api/auth/registration/confirm/token=" + tokenForNewUser;
+        emailSender.sendEmail(request.getEmail(), buildEmail(request.getEmail(), link));
+        return tokenForNewUser;
+
+    }
+
+    public String registreUserService(UserApp userApp) {
+
+        if (userRepository.existsByEmail(userApp.getEmail())) {
+            throw new EntityAlreadyExist("user already exist");
+        }
+
+        Set<Role> roles = modificationRoles(userApp);
+
+        // Create new user's account
+        UserApp user = new UserApp(userApp.getEmail()
+                , encoder.encode(userApp.getPassword()), userApp.getPhone(), roles);
+
+        userRepository.save(user);
+
+        //Creating a token from UUID
+        String token = UUID.randomUUID().toString();
+
+        //Getting the confirmation token and then saving it
+        saveConfirmationToken(user, token);
+
+        //Returning token
+        return token;
+    }
+
+    public Set<Role> modificationRoles(UserApp userApp) {
+        Set<Role> strRoles = userApp.getRoles();
         Set<Role> roles = new HashSet<>();
 
         if (strRoles == null) {
@@ -60,22 +107,8 @@ public class RegistrationService {
                 }
             });
         }
-
-        // Create new user's account
-            SignUpRequest signUpRequet = new SignUpRequest(request.getEmail()
-                , encoder.encode(request.getPassword()), request.getPhone(), roles);
-
-            String tokenForNewUser = appUserService.register(signUpRequet);
-            //Since, we are running the spring boot application in localhost, we are hardcoding the
-            //url of the server. We are creating a POST request with token param
-            String link = "http://localhost:8080/api/auth/registration/confirm/token=" + tokenForNewUser;
-            emailSender.sendEmail(request.getEmail(), buildEmail(request.getEmail(), link));
-            return tokenForNewUser;
-        } else {
-            throw new IllegalStateException(String.format("Email %s, not valid", request.getEmail()));
-        }
+        return roles;
     }
-
 
     @Transactional
     public String confirmToken(String token) {
@@ -96,7 +129,7 @@ public class RegistrationService {
         }
 
         confirmTokenService.setConfirmedAt(token);
-        appUserService.enableAppUser(confirmToken.get().getUserApp().getEmail());
+        this.enableAppUser(confirmToken.get().getUserApp().getEmail());
 
         //Returning confirmation message if the token matches
         return "Your email is confirmed. Thank you for using our service!";
@@ -169,5 +202,17 @@ public class RegistrationService {
                 "  </tbody></table><div class=\"yj6qo\"></div><div class=\"adL\">\n" +
                 "\n" +
                 "</div></div>";
+    }
+
+    private void saveConfirmationToken(UserApp userApp, String token) {
+        ConfirmationToken confirmationToken = new ConfirmationToken(token, LocalDateTime.now(),
+                LocalDateTime.now().plusMinutes(15), userApp);
+        confirmationTokenService.saveConfirmationToken(confirmationToken);
+    }
+
+
+    public int enableAppUser(String email) {
+        return userRepository.enableAppUser(email);
+
     }
 }
