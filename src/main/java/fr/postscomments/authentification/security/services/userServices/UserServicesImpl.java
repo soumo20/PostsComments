@@ -45,6 +45,7 @@ public class UserServicesImpl implements UserServices {
 
     @Override
     public int enableAppUser(String email) {
+
         return userRepository.enableAppUser(email);
     }
 

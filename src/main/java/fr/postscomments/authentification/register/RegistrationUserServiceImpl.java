@@ -10,9 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.UUID;
 
 @Service
-public class RegistrationUserServiceImpl {
-
-
+public class RegistrationUserServiceImpl implements RegistrationUserService {
     private final EmailSender emailSender;
 
 
@@ -31,6 +29,7 @@ public class RegistrationUserServiceImpl {
         this.userServices = userServices;
     }
 
+    @Override
     public String register(SignUpRequest request) {
 
         String tokenForNewUser = registreUserService(new UserApp(request.getEmail(), request.getPassword(), request.getPhone(), request.getRoles()));
@@ -42,6 +41,7 @@ public class RegistrationUserServiceImpl {
         return tokenForNewUser;
     }
 
+    @Override
     public String registreUserService(UserApp userApp) {
 
         userServices.existsByEmail(userApp.getEmail());

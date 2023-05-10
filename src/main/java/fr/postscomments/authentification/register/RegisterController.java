@@ -11,13 +11,13 @@ import org.springframework.web.bind.annotation.*;
 public class RegisterController {
 
 
-    private final RegistrationUserServiceImpl registrationUserServiceImpl;
+    private final RegistrationUserService registrationUserService;
 
     private final ConfirmationTokenService confirmationTokenService;
 
-    public RegisterController(RegistrationUserServiceImpl registrationUserServiceImpl, ConfirmationTokenService confirmationTokenService) {
+    public RegisterController(RegistrationUserService registrationUserService, ConfirmationTokenService confirmationTokenService) {
 
-        this.registrationUserServiceImpl = registrationUserServiceImpl;
+        this.registrationUserService = registrationUserService;
         this.confirmationTokenService = confirmationTokenService;
     }
 
@@ -25,7 +25,7 @@ public class RegisterController {
     @PostMapping
     public ResponseEntity<MessageResponse> registerUser(@Valid @RequestBody SignUpRequest signUpRequest) {
 
-        String token = registrationUserServiceImpl.register(signUpRequest);
+        String token = registrationUserService.register(signUpRequest);
         return ResponseEntity.ok(new MessageResponse("user created with success. A message of validation is sended to your adresse mail :" + token));
     }
 
