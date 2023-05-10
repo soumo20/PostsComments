@@ -1,7 +1,7 @@
 package fr.postscomments.authentification.validationmail.token;
 
 import fr.postscomments.authentification.models.UserApp;
-import fr.postscomments.authentification.security.services.UserServices;
+import fr.postscomments.authentification.security.services.userServices.UserServices;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 

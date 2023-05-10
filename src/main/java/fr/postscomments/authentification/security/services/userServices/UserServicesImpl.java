@@ -1,8 +1,9 @@
-package fr.postscomments.authentification.security.services;
+package fr.postscomments.authentification.security.services.userServices;
 
 import fr.postscomments.authentification.models.Role;
 import fr.postscomments.authentification.models.UserApp;
 import fr.postscomments.authentification.repository.UserRepository;
+import fr.postscomments.authentification.security.services.roleServices.RoleServices;
 import fr.postscomments.shared.exceptions.EntityAlreadyExist;
 import fr.postscomments.shared.exceptions.EntityNotFoundException;
 import org.springframework.security.core.Authentication;
@@ -17,13 +18,13 @@ public class UserServicesImpl implements UserServices {
 
     private final UserRepository userRepository;
 
-    private final RolesServices rolesServices;
+    private final RoleServices roleServices;
 
     private final PasswordEncoder encoder;
 
-    public UserServicesImpl(UserRepository userRepository, RolesServices rolesServices, PasswordEncoder encoder) {
+    public UserServicesImpl(UserRepository userRepository, RoleServices roleServices, PasswordEncoder encoder) {
         this.userRepository = userRepository;
-        this.rolesServices = rolesServices;
+        this.roleServices = roleServices;
         this.encoder = encoder;
     }
 
@@ -50,7 +51,7 @@ public class UserServicesImpl implements UserServices {
     @Override
     public UserApp saveUser(UserApp userApp) {
 
-        Set<Role> roles = rolesServices.unificationRoles(userApp);
+        Set<Role> roles = roleServices.unificationRoles(userApp);
 
         UserApp user = new UserApp(userApp.getEmail()
                 , encoder.encode(userApp.getPassword()), userApp.getPhone(), roles);

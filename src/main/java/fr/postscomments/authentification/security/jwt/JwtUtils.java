@@ -1,7 +1,7 @@
 package fr.postscomments.authentification.security.jwt;
 
 
-import fr.postscomments.authentification.security.services.UserDetailsImpl;
+import fr.postscomments.authentification.security.services.userServices.UserDetailsImpl;
 import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;

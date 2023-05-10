@@ -1,4 +1,4 @@
-package fr.postscomments.authentification.security.services;
+package fr.postscomments.authentification.security.services.roleServices;
 
 import fr.postscomments.authentification.models.ERole;
 import fr.postscomments.authentification.models.Role;
@@ -12,13 +12,13 @@ import java.util.Set;
 
 
 @Service
-public class RolesServicesImpl implements RolesServices {
+public class RoleServicesImpl implements RoleServices {
     private final RoleRepository roleRepository;
 
 
     private static String errorMessage = "Role not found";
 
-    public RolesServicesImpl(RoleRepository roleRepository) {
+    public RoleServicesImpl(RoleRepository roleRepository) {
         this.roleRepository = roleRepository;
     }
 

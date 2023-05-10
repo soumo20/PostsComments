@@ -2,7 +2,7 @@ package fr.postscomments.authentification.login;
 
 import fr.postscomments.authentification.repository.UserRepository;
 import fr.postscomments.authentification.security.jwt.JwtUtils;
-import fr.postscomments.authentification.security.services.UserDetailsImpl;
+import fr.postscomments.authentification.security.services.userServices.UserDetailsImpl;
 import fr.postscomments.shared.exceptions.EntityNotValidate;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

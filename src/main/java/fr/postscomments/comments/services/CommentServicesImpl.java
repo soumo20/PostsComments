@@ -1,7 +1,7 @@
 package fr.postscomments.comments.services;
 
 import fr.postscomments.authentification.models.UserApp;
-import fr.postscomments.authentification.security.services.UserServices;
+import fr.postscomments.authentification.security.services.userServices.UserServices;
 import fr.postscomments.comments.dto.CommentUpdateDto;
 import fr.postscomments.comments.dto.CommentDto;
 import fr.postscomments.comments.models.Comment;

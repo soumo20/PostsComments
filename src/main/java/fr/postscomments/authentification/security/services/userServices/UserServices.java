@@ -1,4 +1,4 @@
-package fr.postscomments.authentification.security.services;
+package fr.postscomments.authentification.security.services.userServices;
 
 import fr.postscomments.authentification.models.UserApp;
 

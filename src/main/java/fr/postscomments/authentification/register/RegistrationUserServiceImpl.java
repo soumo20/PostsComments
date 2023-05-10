@@ -1,7 +1,7 @@
 package fr.postscomments.authentification.register;
 
 import fr.postscomments.authentification.models.UserApp;
-import fr.postscomments.authentification.security.services.UserServices;
+import fr.postscomments.authentification.security.services.userServices.UserServices;
 import fr.postscomments.authentification.validationmail.email.EmailSender;
 import fr.postscomments.authentification.validationmail.email.EmailService;
 import fr.postscomments.authentification.validationmail.token.ConfirmationTokenService;

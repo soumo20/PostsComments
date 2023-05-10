@@ -3,7 +3,7 @@ package fr.postscomments.authentification.security.configuration;
 
 import fr.postscomments.authentification.security.jwt.AuthEntryPointJwt;
 import fr.postscomments.authentification.security.jwt.AuthTokenFilter;
-import fr.postscomments.authentification.security.services.UserDetailsServicesImpl;
+import fr.postscomments.authentification.security.services.userServices.UserDetailsServicesImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
