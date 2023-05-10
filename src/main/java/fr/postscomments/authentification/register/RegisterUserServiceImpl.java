@@ -49,7 +49,7 @@ public class RegisterUserServiceImpl implements RegisterUserService {
             }
             throw new EntityAlreadyExist("user already exist");
         }
-        Set<String> strRoles = signUpRequest.getRoles();
+        Set<Role> strRoles = signUpRequest.getRoles();
         Set<Role> roles = new HashSet<>();
 
         if (strRoles == null) {

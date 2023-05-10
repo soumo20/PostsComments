@@ -1,14 +1,21 @@
 package fr.postscomments.authentification.register;
 
+import fr.postscomments.authentification.models.ERole;
+import fr.postscomments.authentification.models.Role;
+import fr.postscomments.authentification.models.UserApp;
+import fr.postscomments.authentification.repository.RoleRepository;
 import fr.postscomments.authentification.validationmail.email.EmailSender;
 import fr.postscomments.authentification.validationmail.email.EmailValidator;
 import fr.postscomments.authentification.validationmail.token.ConfirmationToken;
 import fr.postscomments.authentification.validationmail.token.ConfirmationTokenService;
 import jakarta.transaction.Transactional;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class RegistrationService {
@@ -17,20 +24,51 @@ public class RegistrationService {
     private final ConfirmationTokenService confirmTokenService;
     private final EmailSender emailSender;
 
-    public RegistrationService(RegisterUserServiceImpl appUserService, EmailValidator emailValidator, ConfirmationTokenService confirmTokenService, EmailSender emailSender) {
+      private final RoleRepository roleRepository;
+
+    private final PasswordEncoder encoder;
+
+    private static final String ERROR_ROLE_NOT_FOUND = "Error: Role is not found.";
+    public RegistrationService(RegisterUserServiceImpl appUserService, EmailValidator emailValidator, ConfirmationTokenService confirmTokenService, EmailSender emailSender, RoleRepository roleRepository, PasswordEncoder encoder) {
         this.appUserService = appUserService;
         this.emailValidator = emailValidator;
         this.confirmTokenService = confirmTokenService;
         this.emailSender = emailSender;
+        this.roleRepository = roleRepository;
+        this.encoder = encoder;
     }
 
     public String register(SignUpRequest request) {
         boolean isValidEmail = emailValidator.test(request.getEmail());
         if (isValidEmail) {
-            String tokenForNewUser = appUserService.register(new SignUpRequest());
+             Set<Role> strRoles = request.getRoles();
+        Set<Role> roles = new HashSet<>();
+
+        if (strRoles == null) {
+            Role userRole = roleRepository.findOneByNameRole(ERole.ROLE_USER).orElseThrow(() -> new RuntimeException(ERROR_ROLE_NOT_FOUND));
+            roles.add(userRole);
+        } else {
+            strRoles.forEach(role -> {
+                if (role.equals("admin")) {
+                    Role adminRole = roleRepository.findOneByNameRole(ERole.ROLE_ADMIN)
+                            .orElseThrow(() -> new RuntimeException(ERROR_ROLE_NOT_FOUND));
+                    roles.add(adminRole);
+                } else {
+                    Role userRole = roleRepository.findOneByNameRole(ERole.ROLE_USER)
+                            .orElseThrow(() -> new RuntimeException(ERROR_ROLE_NOT_FOUND));
+                    roles.add(userRole);
+                }
+            });
+        }
+
+        // Create new user's account
+            SignUpRequest signUpRequet = new SignUpRequest(request.getEmail()
+                , encoder.encode(request.getPassword()), request.getPhone(), roles);
+
+            String tokenForNewUser = appUserService.register(signUpRequet);
             //Since, we are running the spring boot application in localhost, we are hardcoding the
             //url of the server. We are creating a POST request with token param
-            String link = "http://localhost:8080/api/v1/registration/confirm?token=" + tokenForNewUser;
+            String link = "http://localhost:8080/api/auth/registration/confirm/token=" + tokenForNewUser;
             emailSender.sendEmail(request.getEmail(), buildEmail(request.getEmail(), link));
             return tokenForNewUser;
         } else {

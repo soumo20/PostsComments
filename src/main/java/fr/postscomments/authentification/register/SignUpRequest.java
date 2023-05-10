@@ -1,5 +1,6 @@
 package fr.postscomments.authentification.register;
 
+import fr.postscomments.authentification.models.Role;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -26,6 +27,6 @@ public class SignUpRequest {
     @Pattern(regexp = "(?:(?:\\+|00)33|0)\\s*[1-9](?:[\\s.-]*\\d{2}){4}", message = "Please enter a valid format of the phone number")
     private String phone;
 
-    private Set<String> roles;
+    private Set<Role> roles;
 
 }

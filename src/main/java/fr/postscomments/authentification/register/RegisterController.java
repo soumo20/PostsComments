@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("api/auth")
+@RequestMapping("api/auth/registration")
 public class RegisterController {
     private final RegisterUserService registerUserService;
 
@@ -18,15 +18,15 @@ public class RegisterController {
     }
 
 
-    @PostMapping("/signup")
+    @PostMapping
     public ResponseEntity<MessageResponse> registerUser(@Valid @RequestBody SignUpRequest signUpRequest) {
 
-        registerUserService.register(signUpRequest);
-        return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+        String token = registrationService.register(signUpRequest);
+        return ResponseEntity.ok(new MessageResponse("user created with success. A message of validation is sended to your adresse mail :" + token));
     }
 
-    @GetMapping(path = "confirm")
-    public String confirm(@RequestParam("token") String token) {
+    @GetMapping("/confirm/token={token}")
+    public String confirm(@PathVariable("token") String token) {
         return registrationService.confirmToken(token);
     }
 }

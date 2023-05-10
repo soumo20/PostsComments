@@ -25,7 +25,7 @@ public class UserApp {
     private String email;
 
     @JsonIgnore
-    private String passeword;
+    private String password;
 
     private String phone;
 
@@ -40,7 +40,7 @@ public class UserApp {
 
     public UserApp(String email, String passeword, String phone, Set<Role> roles) {
         this.email = email;
-        this.passeword = passeword;
+        this.password = passeword;
         this.phone = phone;
         this.roles = roles;
     }
