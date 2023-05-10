@@ -1,10 +1,11 @@
 package fr.postscomments.authentification.register;
 
 import fr.postscomments.authentification.models.UserApp;
-import fr.postscomments.authentification.security.services.userServices.UserServices;
+import fr.postscomments.authentification.security.services.user.UserServices;
 import fr.postscomments.authentification.validationmail.email.EmailSender;
 import fr.postscomments.authentification.validationmail.email.EmailService;
 import fr.postscomments.authentification.validationmail.token.ConfirmationTokenService;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -12,15 +13,9 @@ import java.util.UUID;
 @Service
 public class RegistrationUserServiceImpl implements RegistrationUserService {
     private final EmailSender emailSender;
-
-
     private final ConfirmationTokenService confirmationTokenService;
-
     private final EmailService emailService;
-
-
     private final UserServices userServices;
-
 
     public RegistrationUserServiceImpl(EmailSender emailSender, ConfirmationTokenService confirmationTokenService, EmailService emailService, UserServices userServices) {
         this.emailSender = emailSender;
@@ -30,19 +25,22 @@ public class RegistrationUserServiceImpl implements RegistrationUserService {
     }
 
     @Override
-    public String register(SignUpRequest request) {
+    @Transactional
+    public void register(SignUpRequest request) {
 
-        String tokenForNewUser = registreUserService(new UserApp(request.getEmail(), request.getPassword(), request.getPhone(), request.getRoles()));
+        String tokenForNewUser = registerUserService(new UserApp(request.getEmail(),
+                request.getPassword(), request.getPhone(), request.getRoles()));
 
         //Since, we are running the spring boot application in localhost, we are hardcoding the
         //url of the server. We are creating a POST request with token param
+        // @todo add baseurl as var env
         String link = "http://localhost:8080/api/auth/registration/confirm/token=" + tokenForNewUser;
         emailSender.sendEmail(request.getEmail(), emailService.buildEmail(request.getEmail(), link));
-        return tokenForNewUser;
+
     }
 
     @Override
-    public String registreUserService(UserApp userApp) {
+    public String registerUserService(UserApp userApp) {
 
         userServices.existsByEmail(userApp.getEmail());
 

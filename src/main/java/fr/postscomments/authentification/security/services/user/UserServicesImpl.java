@@ -1,9 +1,9 @@
-package fr.postscomments.authentification.security.services.userServices;
+package fr.postscomments.authentification.security.services.user;
 
 import fr.postscomments.authentification.models.Role;
 import fr.postscomments.authentification.models.UserApp;
 import fr.postscomments.authentification.repository.UserRepository;
-import fr.postscomments.authentification.security.services.roleServices.RoleServices;
+import fr.postscomments.authentification.security.services.role.RoleServices;
 import fr.postscomments.shared.exceptions.EntityAlreadyExist;
 import fr.postscomments.shared.exceptions.EntityNotFoundException;
 import org.springframework.security.core.Authentication;
@@ -36,17 +36,15 @@ public class UserServicesImpl implements UserServices {
     }
 
     @Override
-    public boolean existsByEmail(String email) {
+    public void existsByEmail(String email) {
         if (userRepository.existsByEmail(email)) {
             throw new EntityAlreadyExist("Email already token");
         }
-        return false;
     }
 
     @Override
-    public int enableAppUser(String email) {
-
-        return userRepository.enableAppUser(email);
+    public void enableAppUser(String email) {
+        userRepository.enableAppUser(email);
     }
 
     @Override

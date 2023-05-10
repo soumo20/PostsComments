@@ -1,4 +1,4 @@
-package fr.postscomments.authentification.security.services.userServices;
+package fr.postscomments.authentification.security.services.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import fr.postscomments.authentification.models.UserApp;
@@ -19,7 +19,7 @@ public class UserDetailsImpl implements UserDetails {
     private final String password;
 
 
-    private Boolean enabled;
+    private final Boolean enabled;
     private final Collection<? extends GrantedAuthority> authorities;
 
     public UserDetailsImpl(Long id, String email, String password, boolean enabled,

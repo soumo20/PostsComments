@@ -27,11 +27,12 @@ public class EmailSenderImpl implements EmailSender {
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
             helper.setText(email, true);
             helper.setTo(to);
+            // @todo add subjet as parm and mail from as vars env
             helper.setSubject("Confirm your email");
             helper.setFrom("test@email.com");
             mailSender.send(mimeMessage);
         } catch (MessagingException e) {
-            logger.error("Failed to send email for: %s \n %s", email, e);
+            logger.error("Failed to send email for: {}{}{}", email, e.getMessage(), System.lineSeparator());
             throw new IllegalArgumentException("Failed to send email for: " + email);
         }
 

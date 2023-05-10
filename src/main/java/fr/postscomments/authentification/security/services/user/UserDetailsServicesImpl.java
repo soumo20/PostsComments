@@ -1,8 +1,7 @@
-package fr.postscomments.authentification.security.services.userServices;
+package fr.postscomments.authentification.security.services.user;
 
 import fr.postscomments.authentification.models.UserApp;
 import fr.postscomments.authentification.repository.UserRepository;
-import fr.postscomments.authentification.security.services.userServices.UserDetailsImpl;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

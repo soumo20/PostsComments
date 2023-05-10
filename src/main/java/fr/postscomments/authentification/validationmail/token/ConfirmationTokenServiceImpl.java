@@ -1,12 +1,12 @@
 package fr.postscomments.authentification.validationmail.token;
 
 import fr.postscomments.authentification.models.UserApp;
-import fr.postscomments.authentification.security.services.userServices.UserServices;
+import fr.postscomments.authentification.security.services.user.UserServices;
+import fr.postscomments.shared.exceptions.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 @Service
 public class ConfirmationTokenServiceImpl implements ConfirmationTokenService {
@@ -25,36 +25,30 @@ public class ConfirmationTokenServiceImpl implements ConfirmationTokenService {
     }
 
     @Override
-    public Optional<ConfirmationToken> getToken(String token) {
-        return confirmationTokenRepository.findByToken(token);
-    }
-
-    @Override
-    public int setConfirmedAt(String token) {
-        return confirmationTokenRepository.updateConfirmedAt(token, LocalDateTime.now());
+    public ConfirmationToken getToken(String token) {
+        return confirmationTokenRepository.findByToken(token).orElseThrow(() -> new EntityNotFoundException("Token not found!"));
     }
 
     @Transactional
     @Override
     public String confirmToken(String token) {
-        Optional<ConfirmationToken> confirmToken = getToken(token);
+        ConfirmationToken confirmToken = getToken(token);
 
-        if (confirmToken.isEmpty()) {
-            throw new IllegalStateException("Token not found!");
-        }
 
-        if (confirmToken.get().getConfirmedAt() != null) {
+        if (confirmToken.getConfirmedAt() != null) {
             throw new IllegalStateException("Email is already confirmed");
         }
 
-        LocalDateTime expiresAt = confirmToken.get().getExpiresAt();
+        LocalDateTime expiresAt = confirmToken.getExpiresAt();
 
         if (expiresAt.isBefore(LocalDateTime.now())) {
             throw new IllegalStateException("Token is already expired!");
         }
 
-        setConfirmedAt(token);
-        userServices.enableAppUser(confirmToken.get().getUserApp().getEmail());
+        confirmToken.setConfirmedAt(LocalDateTime.now());
+        confirmationTokenRepository.save(confirmToken);
+
+        userServices.enableAppUser(confirmToken.getUserApp().getEmail());
 
         //Returning confirmation message if the token matches
         return "Your email is confirmed. Thank you for using our service!";

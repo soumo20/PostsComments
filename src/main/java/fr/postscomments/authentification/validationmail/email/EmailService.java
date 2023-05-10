@@ -2,7 +2,7 @@ package fr.postscomments.authentification.validationmail.email;
 
 public interface EmailService {
 
-    public String buildEmail(String name, String link);
+    String buildEmail(String name, String link);
 
 
 }

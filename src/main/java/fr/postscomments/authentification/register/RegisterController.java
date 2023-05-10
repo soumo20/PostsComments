@@ -25,8 +25,8 @@ public class RegisterController {
     @PostMapping
     public ResponseEntity<MessageResponse> registerUser(@Valid @RequestBody SignUpRequest signUpRequest) {
 
-        String token = registrationUserService.register(signUpRequest);
-        return ResponseEntity.ok(new MessageResponse("user created with success. A message of validation is sended to your adresse mail :" + token));
+        registrationUserService.register(signUpRequest);
+        return ResponseEntity.ok(new MessageResponse("user created with success. A message of validation is sended to your adresse mail "));
     }
 
     @GetMapping("/confirm/token={token}")

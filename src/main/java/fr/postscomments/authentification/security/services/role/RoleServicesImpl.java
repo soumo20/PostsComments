@@ -1,4 +1,4 @@
-package fr.postscomments.authentification.security.services.roleServices;
+package fr.postscomments.authentification.security.services.role;
 
 import fr.postscomments.authentification.models.ERole;
 import fr.postscomments.authentification.models.Role;
@@ -16,7 +16,7 @@ public class RoleServicesImpl implements RoleServices {
     private final RoleRepository roleRepository;
 
 
-    private static String errorMessage = "Role not found";
+    private static final String ERROR_MESSAGE = "Role not found";
 
     public RoleServicesImpl(RoleRepository roleRepository) {
         this.roleRepository = roleRepository;
@@ -29,17 +29,17 @@ public class RoleServicesImpl implements RoleServices {
         Set<Role> roles = new HashSet<>();
 
         if (strRoles == null) {
-            Role userRole = roleRepository.findOneByNameRole(ERole.ROLE_USER).orElseThrow(() -> new EntityNotFoundException(errorMessage));
+            Role userRole = roleRepository.findOneByNameRole(ERole.ROLE_USER).orElseThrow(() -> new EntityNotFoundException(ERROR_MESSAGE));
             roles.add(userRole);
         } else {
             strRoles.forEach(role -> {
                 if (role.getNameRole().name().equals("admin")) {
                     Role adminRole = roleRepository.findOneByNameRole(ERole.ROLE_ADMIN)
-                            .orElseThrow(() -> new EntityNotFoundException(errorMessage));
+                            .orElseThrow(() -> new EntityNotFoundException(ERROR_MESSAGE));
                     roles.add(adminRole);
                 } else {
                     Role userRole = roleRepository.findOneByNameRole(ERole.ROLE_USER)
-                            .orElseThrow(() -> new EntityNotFoundException(errorMessage));
+                            .orElseThrow(() -> new EntityNotFoundException(ERROR_MESSAGE));
                     roles.add(userRole);
                 }
             });
