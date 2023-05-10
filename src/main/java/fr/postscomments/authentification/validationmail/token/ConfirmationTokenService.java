@@ -1,27 +1,18 @@
 package fr.postscomments.authentification.validationmail.token;
 
-import org.springframework.stereotype.Service;
+import fr.postscomments.authentification.models.UserApp;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
 
-@Service
-public class ConfirmationTokenService {
-    private final ConfirmationTokenRepository confirmationTokenRepository;
+public interface ConfirmationTokenService {
+    public void saveConfirmationToken(ConfirmationToken token);
 
-    public ConfirmationTokenService(ConfirmationTokenRepository confirmationTokenRepository) {
-        this.confirmationTokenRepository = confirmationTokenRepository;
-    }
+    public Optional<ConfirmationToken> getToken(String token);
 
-    public void saveConfirmationToken(ConfirmationToken token) {
-        confirmationTokenRepository.save(token);
-    }
+    public int setConfirmedAt(String token);
 
-    public Optional<ConfirmationToken> getToken(String token) {
-        return confirmationTokenRepository.findByToken(token);
-    }
 
-    public int setConfirmedAt(String token) {
-        return confirmationTokenRepository.updateConfirmedAt(token, LocalDateTime.now());
-    }
+    public String confirmToken(String token);
+
+    public void saveConfirmationToken(UserApp userApp, String token);
 }

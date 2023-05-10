@@ -4,6 +4,8 @@ package fr.postscomments.authentification.security.configuration;
 import fr.postscomments.authentification.security.jwt.AuthEntryPointJwt;
 import fr.postscomments.authentification.security.jwt.AuthTokenFilter;
 import fr.postscomments.authentification.security.services.UserDetailsServicesImpl;
+import fr.postscomments.authentification.validationmail.email.EmailService;
+import fr.postscomments.authentification.validationmail.email.EmailServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -33,6 +35,7 @@ public class WebSecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
 
     @Bean
     public DaoAuthenticationProvider authenticationProvider(UserDetailsServicesImpl userDetailsService) {

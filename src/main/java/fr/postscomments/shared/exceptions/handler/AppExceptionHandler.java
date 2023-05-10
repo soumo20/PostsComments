@@ -1,7 +1,8 @@
 package fr.postscomments.shared.exceptions.handler;
 
+import fr.postscomments.shared.exceptions.EntityAlreadyExist;
 import fr.postscomments.shared.exceptions.EntityNotFoundException;
-import fr.postscomments.shared.exceptions.EntityNotValidate;
+import fr.postscomments.shared.exceptions.EntityNotValid;
 import fr.postscomments.shared.exceptions.ErrorMessage;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +33,26 @@ public class AppExceptionHandler {
                 .code(404)
                 .build();
         return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(value = {EntityAlreadyExist.class})
+    public ResponseEntity<Object> entityAlreadyExist(EntityAlreadyExist ex) {
+        ErrorMessage errorMessage = ErrorMessage.builder()
+                .message(ex.getMessage())
+                .timestamp(new Date())
+                .code(403)
+                .build();
+        return new ResponseEntity<>(errorMessage, HttpStatus.ALREADY_REPORTED);
+    }
+
+    @ExceptionHandler(value = {EntityNotValid.class})
+    public ResponseEntity<Object> entityNotValid(EntityNotValid ex) {
+        ErrorMessage errorMessage = ErrorMessage.builder()
+                .message(ex.getMessage())
+                .timestamp(new Date())
+                .code(403)
+                .build();
+        return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
     }
 
 }

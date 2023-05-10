@@ -1,6 +1,5 @@
 package fr.postscomments.authentification.login;
 
-import fr.postscomments.authentification.register.RegistrationService;
 import fr.postscomments.authentification.repository.UserRepository;
 import fr.postscomments.authentification.security.jwt.JwtUtils;
 import fr.postscomments.authentification.security.services.UserDetailsImpl;
