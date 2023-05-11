@@ -19,7 +19,7 @@ class PostRepositoryTest {
     private PostRepository postRepository;
 
     @Test
-    public void testExistPostByIdTrue() {
+    void testExistPostByIdTrue() {
         UserApp author = new UserApp();
         entityManager.persistAndFlush(author);
 

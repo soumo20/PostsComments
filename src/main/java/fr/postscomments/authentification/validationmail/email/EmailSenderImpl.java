@@ -21,13 +21,13 @@ public class EmailSenderImpl implements EmailSender {
 
     @Override
     @Async
-    public void sendEmail(String to, String email) {
+    public void sendEmail(String to, String email) throws IllegalArgumentException {
         try {
             MimeMessage mimeMessage = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
             helper.setText(email, true);
             helper.setTo(to);
-            // @todo add subjet as parm and mail from as vars env
+            // todo : add subjet as parm and mail from as vars env
             helper.setSubject("Confirm your email");
             helper.setFrom("test@email.com");
             mailSender.send(mimeMessage);
