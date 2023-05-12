@@ -10,15 +10,13 @@ import java.io.IOException;
 public class EmailServiceImpl implements EmailService {
     @Override
     public String buildEmail(String name, String link) {
-        try {
-            BufferedReader br = new BufferedReader(new FileReader("src/main/resources/templates/email-template.html"));
-            StringBuilder sb = new StringBuilder();
+        try (BufferedReader bufferReader = new BufferedReader(new FileReader("src/main/resources/templates/email-template.html"))) {
+            StringBuilder stringBuilder = new StringBuilder();
             String line;
-            while ((line = br.readLine()) != null) {
-                sb.append(line);
+            while ((line = bufferReader.readLine()) != null) {
+                stringBuilder.append(line);
             }
-            br.close();
-            String html = sb.toString();
+            String html = stringBuilder.toString();
             // remplacer les variables dans le modèle HTML
             html = html.replace("$NAME", name).replace("$LINK", link);
             return html;
