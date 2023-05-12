@@ -34,6 +34,7 @@ public class UserApp {
             joinColumns = @JoinColumn(name = "id_user"),
             inverseJoinColumns = @JoinColumn(name = "id_role"))
     private Set<Role> roles;
+
     private Boolean enabled;
 
     public UserApp(String email, String passeword, String phone, Set<Role> roles) {
@@ -41,5 +42,6 @@ public class UserApp {
         this.password = passeword;
         this.phone = phone;
         this.roles = roles;
+        this.enabled = false;
     }
 }

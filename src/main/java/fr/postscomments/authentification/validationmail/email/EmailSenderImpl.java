@@ -27,7 +27,6 @@ public class EmailSenderImpl implements EmailSender {
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
             helper.setText(email, true);
             helper.setTo(to);
-            // todo : add subjet as parm and mail from as vars env
             helper.setSubject(subject);
             helper.setFrom(System.getenv("MAIL_SENDER"));
             mailSender.send(mimeMessage);
