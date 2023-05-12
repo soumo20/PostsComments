@@ -24,7 +24,7 @@ class UserRepoTest {
         void existByEmailTrue() {
             //Given
             String email = "existByEmail@gmail.com";
-            UserApp user = UserApp.builder().email(email).passeword("0000").phone("0606060606").build();
+            UserApp user = UserApp.builder().email(email).password("0000").phone("0606060606").build();
             userRepository.save(user);
 
             //When

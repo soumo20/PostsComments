@@ -1,4 +1,4 @@
-package fr.postscomments.authentification.security.services;
+package fr.postscomments.authentification.security.services.user;
 
 import fr.postscomments.authentification.models.UserApp;
 import fr.postscomments.authentification.repository.UserRepository;
@@ -23,4 +23,6 @@ public class UserDetailsServicesImpl implements UserDetailsService {
         UserApp user = userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User not found with the given email " + email));
         return UserDetailsImpl.build(user);
     }
+
+
 }

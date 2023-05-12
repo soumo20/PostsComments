@@ -3,7 +3,7 @@ package fr.postscomments.authentification.security.configuration;
 
 import fr.postscomments.authentification.security.jwt.AuthEntryPointJwt;
 import fr.postscomments.authentification.security.jwt.AuthTokenFilter;
-import fr.postscomments.authentification.security.services.UserDetailsServicesImpl;
+import fr.postscomments.authentification.security.services.user.UserDetailsServicesImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -34,6 +34,7 @@ public class WebSecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
+
     @Bean
     public DaoAuthenticationProvider authenticationProvider(UserDetailsServicesImpl userDetailsService) {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
@@ -44,7 +45,7 @@ public class WebSecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http, AuthEntryPointJwt unauthorizedHandler,UserDetailsServicesImpl userDetailsService) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http, AuthEntryPointJwt unauthorizedHandler, UserDetailsServicesImpl userDetailsService) throws Exception {
         http
                 .cors().and().csrf().disable()
                 //If there is any exception it will be handler by entryPoint and don't create session for user
@@ -65,6 +66,4 @@ public class WebSecurityConfig {
         return http.build();
 
     }
-
-
 }

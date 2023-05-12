@@ -25,7 +25,7 @@ public class UserApp {
     private String email;
 
     @JsonIgnore
-    private String passeword;
+    private String password;
 
     private String phone;
 
@@ -35,10 +35,13 @@ public class UserApp {
             inverseJoinColumns = @JoinColumn(name = "id_role"))
     private Set<Role> roles;
 
+    private Boolean enabled;
+
     public UserApp(String email, String passeword, String phone, Set<Role> roles) {
         this.email = email;
-        this.passeword = passeword;
+        this.password = passeword;
         this.phone = phone;
         this.roles = roles;
+        this.enabled = false;
     }
 }

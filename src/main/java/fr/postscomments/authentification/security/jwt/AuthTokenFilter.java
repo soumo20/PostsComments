@@ -1,6 +1,6 @@
 package fr.postscomments.authentification.security.jwt;
 
-import fr.postscomments.authentification.security.services.UserDetailsServicesImpl;
+import fr.postscomments.authentification.security.services.user.UserDetailsServicesImpl;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

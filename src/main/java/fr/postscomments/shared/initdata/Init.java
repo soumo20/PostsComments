@@ -1,4 +1,4 @@
-package fr.postscomments;
+package fr.postscomments.shared.initdata;
 
 import fr.postscomments.authentification.models.ERole;
 import fr.postscomments.authentification.models.Role;
@@ -46,8 +46,9 @@ public class Init implements CommandLineRunner {
         role2.setNameRole(ERole.ROLE_ADMIN);
         UserApp userApp = new UserApp();
         userApp.setEmail("camille@gmail.com");
-        userApp.setPasseword(encoder.encode("azerty"));
+        userApp.setPassword(encoder.encode("azerty"));
         userApp.setPhone("0672142332");
+        userApp.setEnabled(true);
         userApp.setRoles(Set.of(role1));
 
         Post post = new Post();
@@ -60,7 +61,6 @@ public class Init implements CommandLineRunner {
         entityManager.persist(userApp);
         entityManager.persist(post);
         entityManager.flush();
-
 
 
     }

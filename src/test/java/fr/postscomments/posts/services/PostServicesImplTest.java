@@ -1,7 +1,7 @@
 package fr.postscomments.posts.services;
 
 import fr.postscomments.authentification.models.UserApp;
-import fr.postscomments.authentification.security.services.UserServices;
+import fr.postscomments.authentification.security.services.user.UserServices;
 import fr.postscomments.posts.dto.PostDto;
 import fr.postscomments.shared.exceptions.EntityNotFoundException;
 import fr.postscomments.posts.models.Post;
