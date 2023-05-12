@@ -33,9 +33,8 @@ public class RegistrationUserServiceImpl implements RegistrationUserService {
 
         //Since, we are running the spring boot application in localhost, we are hardcoding the
         //url of the server. We are creating a POST request with token param
-        // TODO add baseurl as var env
-        String link = "http://localhost:8080/api/auth/registration/confirm/token=" + tokenForNewUser;
-        emailSender.sendEmail(request.getEmail(), emailService.buildEmail(request.getEmail(), link));
+        String link = System.getenv("BASE_URL") + "/api/auth/registration/confirm/token=" + tokenForNewUser;
+        emailSender.sendEmail(request.getEmail(), emailService.buildEmail(request.getEmail(), link), "Confirm your email");
 
     }
 
